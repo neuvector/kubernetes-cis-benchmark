@@ -4,7 +4,7 @@
 
 This set of scripts can be used to check the Kubernetes installation against the best-practices. They are inspired by CIS Kubernetes 1.6 Benchmark.
 
-These scripts are devided into the set to run on the Kubernetes master nodes and the set to run on the worker nodes.
+These scripts are devided into the set to run on the Kubernetes master nodes, worker nodes and federation nodes.
 
 On the master nodes,
 ```
@@ -15,3 +15,6 @@ On the worker nodes,
 ```
 $ ./worker.sh
 ```
+On the federation nodes,
+```
+$ ./federation.sh

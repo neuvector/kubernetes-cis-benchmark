@@ -1,6 +1,6 @@
 
 check_2_1_1="2.1.1  - Ensure that the --allow-privileged argument is set to false"
-if check_argument 'kubelet-real' '--allow-privileged' >/dev/null 2>&1; then
+if check_argument 'kubelet-real' '--allow-privileged=false' >/dev/null 2>&1; then
     pass "$check_2_1_1"
 else
     warn "$check_2_1_1"

@@ -23,7 +23,7 @@ else
 fi
 
 check_1_3_4="1.3.4  - Ensure that the --use-service-account-credentials argument is set to true"
-if check_argument 'kube-controller-manager' '--use-service-account-credentials=true' >/dev/null 2>&1; then
+if check_argument 'kube-controller-manager' '--use-service-account-credentials' >/dev/null 2>&1; then
     pass "$check_1_3_4"
 else
     warn "$check_1_3_4"

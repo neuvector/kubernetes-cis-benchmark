@@ -2,7 +2,7 @@
 check_1_4_1="1.4.1  - Ensure that the apiserver file permissions are set to 644 or more restrictive"
 file="/etc/kubernetes/manifests/kube-apiserver.json"
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_1"
   else
     warn "$check_1_4_1"
@@ -29,7 +29,7 @@ fi
 check_1_4_3="1.4.3  - Ensure that the config file permissions are set to 644 or more restrictive"
 file="/etc/kubernetes/admin.conf"
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_3"
   else
     warn "$check_1_4_3"
@@ -57,7 +57,7 @@ fi
 check_1_4_5="1.4.5  - Ensure that the scheduler file permissions are set to 644 or more restrictive"
 file="/etc/kubernetes/manifests/kube-scheduler.json"
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_5"
   else
     warn "$check_1_4_5"
@@ -85,7 +85,7 @@ fi
 check_1_4_7="1.4.7  - Ensure that the etcd.conf file permissions are set to 644 or more restrictive"
 file="/etc/kubernetes/manifests/etcd.json"
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_7"
   else
     warn "$check_1_4_7"

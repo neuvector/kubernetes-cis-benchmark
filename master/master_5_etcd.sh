@@ -15,7 +15,7 @@ else
 fi
 
 check_1_5_2="1.5.2  - Ensure that the --client-cert-auth argument is set to true (Scored)"
-if check_argument 'etcd' '--client-cert-auth=true' >/dev/null 2>&1; then
+if check_argument 'etcd' '--client-cert-auth' >/dev/null 2>&1; then
     pass "$check_1_5_2"
 else
     warn "$check_1_5_2"
@@ -44,7 +44,7 @@ else
 fi
 
 check_1_5_5="1.5.5  - Ensure that the --peer-client-cert-auth argument is set to true (Scored)"
-if check_argument 'etcd' '--peer-client-cert-auth=true' >/dev/null 2>&1; then
+if check_argument 'etcd' '--peer-client-cert-auth' >/dev/null 2>&1; then
     pass "$check_1_5_5"
 else
     warn "$check_1_5_5"

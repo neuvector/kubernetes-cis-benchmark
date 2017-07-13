@@ -1,4 +1,4 @@
-# CIS Kubernetes 1.6 Benchmark
+# CIS Kubernetes Benchmark
 
 ![CIS Kubernetes Benchmark output](https://raw.githubusercontent.com/neuvector/kubernetes-cis-benchmark/master/bench.png "CIS Kubernetes Benchmark output")
 

@@ -11,16 +11,6 @@
 # Load dependencies
 . ./helper.sh
 
-yell "# ------------------------------------------------------------------------------
-# Kubenetes CIS benchmark 1.6
-#
-# NeuVector, Inc. (c) 2016-
-#
-# NeuVector delivers an application and network intelligent container security 
-# solution that automatically adapts to protect running containers. Don’t let 
-# security concerns slow down your CI/CD processes.
-# ------------------------------------------------------------------------------"
-
 # Check for required program(s)
 req_progs='awk grep'
 for p in $req_progs; do

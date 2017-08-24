@@ -31,7 +31,7 @@ fi
 
 check_2_1_5="2.1.5  - Ensure that the --read-only-port argument is set to 0"
 if check_argument 'kubelet' '--read-only-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'kubelet' '--read-only-port'|awk '{print $1}')
+	port=$(get_argument_value 'kubelet' '--read-only-port' | awk '{print $1}')
 	if [ $port = "0" ]; then
     	pass "$check_2_1_5"
 	else 
@@ -81,7 +81,7 @@ fi
 
 check_2_1_11="2.1.11  - Ensure that the --event-qps argument is set to 0"
 if check_argument 'kubelet' '--event-qps' >/dev/null 2>&1; then
-	event=$(get_argument_value 'kubelet' '--event-qps'|awk '{print $1}')
+	event=$(get_argument_value 'kubelet' '--event-qps' | awk '{print $1}')
 	if [ $event = "0" ]; then
     	pass "$check_2_1_11"
 	else
@@ -109,7 +109,7 @@ fi
 
 check_2_1_13="2.1.13  - Ensure that the --cadvisor-port argument is set to 0"
 if check_argument 'kubelet' '--cadvisor-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'kubelet' '--cadvisor-port'|awk '{print $1}')
+	port=$(get_argument_value 'kubelet' '--cadvisor-port' | awk '{print $1}')
 	if [ $port = "0" ]; then
     	pass "$check_2_1_13"
 	else

@@ -9,12 +9,6 @@
 # Load dependencies
 . ./helper.sh
 
-yell "# ------------------------------------------------------------------------------
-# Kubenetes CIS benchmark 1.6
-#
-# NeuVector, Inc. (c) 2016-
-# ------------------------------------------------------------------------------"
-
 # Check for required program(s)
 req_progs='awk grep'
 for p in $req_progs; do

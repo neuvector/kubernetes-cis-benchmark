@@ -22,6 +22,16 @@ yell () {
   printf "%b\n" "${bldylw}$1${txtrst}\n"
 }
 
+yell "# ------------------------------------------------------------------------------
+# Kubernetes CIS benchmark 1.6
+#
+# NeuVector, Inc. (c) 2016-
+#
+# NeuVector delivers an application and network intelligent container security
+# solution that automatically adapts to protect running containers. Don’t let
+# security concerns slow down your CI/CD processes.
+# ------------------------------------------------------------------------------"
+
 #get a process command line from /proc
 get_command_line_args() {
     PROC="$1"

@@ -1,3 +1,4 @@
+info "1.3 - Controller Manager"
 
 check_1_3_1="1.3.1  - Ensure that the --terminated-pod-gc-threshold argument is set as appropriate"
 if check_argument 'kube-controller-manager' '--terminated-pod-gc-threshold' >/dev/null 2>&1; then

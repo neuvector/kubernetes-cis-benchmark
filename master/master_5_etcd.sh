@@ -1,3 +1,4 @@
+info "1.5 - etcd"
 
 check_1_5_1="1.5.1  - Ensure that the --cert-file and --key-file arguments are set as appropriate (Scored)"
 if check_argument 'etcd' '-cert-file' >/dev/null 2>&1; then

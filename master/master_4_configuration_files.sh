@@ -1,6 +1,11 @@
+info "1.4 - Configuration Files"
 
 check_1_4_1="1.4.1  - Ensure that the apiserver file permissions are set to 644 or more restrictive"
-file="/etc/kubernetes/manifests/kube-apiserver.json"
+if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
+	file="/etc/kubernetes/manifests/kube-apiserver.json"
+else
+	file="/etc/kubernetes/manifests/kube-apiserver.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_1"
@@ -14,7 +19,11 @@ else
 fi
 
 check_1_4_2="1.4.2  - Ensure that the apiserver file ownership is set to root:root"
-file="/etc/kubernetes/manifests/kube-apiserver.json"
+if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
+	file="/etc/kubernetes/manifests/kube-apiserver.json"
+else
+	file="/etc/kubernetes/manifests/kube-apiserver.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_1_4_2"
@@ -55,7 +64,11 @@ else
 fi
 
 check_1_4_5="1.4.5  - Ensure that the scheduler file permissions are set to 644 or more restrictive"
-file="/etc/kubernetes/manifests/kube-scheduler.json"
+if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
+	file="/etc/kubernetes/manifests/kube-scheduler.json"
+else
+	file="/etc/kubernetes/manifests/kube-scheduler.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_5"
@@ -69,7 +82,11 @@ else
 fi
 
 check_1_4_6="1.4.6  - Ensure that the scheduler file ownership is set to root:root"
-file="/etc/kubernetes/manifests/kube-scheduler.json"
+if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
+	file="/etc/kubernetes/manifests/kube-scheduler.json"
+else
+	file="/etc/kubernetes/manifests/kube-scheduler.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_1_4_6"
@@ -83,7 +100,11 @@ else
 fi
 
 check_1_4_7="1.4.7  - Ensure that the etcd.conf file permissions are set to 644 or more restrictive"
-file="/etc/kubernetes/manifests/etcd.json"
+if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
+	file="/etc/kubernetes/manifests/etcd.json"
+else
+	file="/etc/kubernetes/manifests/etcd.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_7"
@@ -97,7 +118,11 @@ else
 fi
 
 check_1_4_8="1.4.8  - Ensure that the etcd.conf file ownership is set to root:root"
-file="/etc/kubernetes/manifests/etcd.json"
+if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
+	file="/etc/kubernetes/manifests/etcd.json"
+else
+	file="/etc/kubernetes/manifests/etcd.yaml"
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_1_4_8"

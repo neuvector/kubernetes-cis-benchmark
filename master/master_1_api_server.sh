@@ -1,3 +1,4 @@
+info "1.1 - API Server"
 
 check_1_1_1="1.1.1  - Ensure that the --allow-privileged argument is set to false"
 if check_argument 'kube-apiserver' '--allow-privileged=false' >/dev/null 2>&1; then
@@ -226,7 +227,7 @@ check_1_1_26="1.1.26  - Ensure that the --service-account-key-file argument is s
 if check_argument 'kube-apiserver' '--service-account-key-file' >/dev/null 2>&1; then
 	file=$(get_argument_value 'kube-apiserver' '--service-account-key-file')
   	pass "$check_1_1_26"
-      pass "        * service-account-key-file: $file"
+    pass "        * service-account-key-file: $file"
 else
   	warn "$check_1_1_26"
 fi

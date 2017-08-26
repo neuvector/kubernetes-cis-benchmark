@@ -1,3 +1,4 @@
+info "2.2 - Configuration Files"
 
 check_2_2_1="2.2.1  - Ensure that the config file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/config" ]; then

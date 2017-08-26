@@ -1,3 +1,4 @@
+info "2.1 - Kubelet"
 
 check_2_1_1="2.1.1  - Ensure that the --allow-privileged argument is set to false"
 if check_argument 'kubelet' '--allow-privileged=false' >/dev/null 2>&1; then

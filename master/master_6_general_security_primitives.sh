@@ -46,3 +46,5 @@ check_1_6_7="1.6.7  - Apply Security Context to Your Pods and Containers (Not Sc
 info $check_1_6_7
 check_1_6_8="1.6.8  - Configure Image Provenance using ImagePolicyWebhook admission controller (Not Scored)"
 info $check_1_6_8
+check_1_6_9="1.6.9  - Place compensating controls in the form of PSP and RBAC for privileged containers usage"
+info $check_1_6_9

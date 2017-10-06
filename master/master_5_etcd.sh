@@ -2,15 +2,15 @@ info "1.5 - etcd"
 
 check_1_5_1="1.5.1  - Ensure that the --cert-file and --key-file arguments are set as appropriate (Scored)"
 if check_argument 'etcd' '-cert-file' >/dev/null 2>&1; then
-	if check_argument 'etcd' '-key-file' >/dev/null 2>&1; then
-		cfile=$(get_argument_value 'etcd' '--cert-file')
-		kfile=$(get_argument_value 'etcd' '--key-file')
-	  	pass "$check_1_5_1"
-    	pass "       * cert-file: $cfile"
-    	pass "       * key-file: $kfile"
-	else
-	  warn "$check_1_5_1"
-	fi
+    if check_argument 'etcd' '-key-file' >/dev/null 2>&1; then
+        cfile=$(get_argument_value 'etcd' '--cert-file')
+        kfile=$(get_argument_value 'etcd' '--key-file')
+        pass "$check_1_5_1"
+        pass "       * cert-file: $cfile"
+        pass "       * key-file: $kfile"
+    else
+      warn "$check_1_5_1"
+    fi
 else
     warn "$check_1_5_1"
 fi
@@ -31,15 +31,15 @@ fi
 
 check_1_5_4="1.5.4  - Ensure that the --peer-cert-file and --peer-key-file arguments are set as appropriate (Scored)"
 if check_argument 'etcd' '-peer-cert-file' >/dev/null 2>&1; then
-	if check_argument 'etcd' '-peer-key-file' >/dev/null 2>&1; then
-		cfile=$(get_argument_value 'etcd' '--peer-cert-file')
-		kfile=$(get_argument_value 'etcd' '--peer-key-file')
-	  	pass "$check_1_5_4"
-    	pass "       * peer-cert-file: $cfile"
-    	pass "       * peer-key-file: $kfile"
-	else
-	  	warn "$check_1_5_4"
-	fi
+    if check_argument 'etcd' '-peer-key-file' >/dev/null 2>&1; then
+        cfile=$(get_argument_value 'etcd' '--peer-cert-file')
+        kfile=$(get_argument_value 'etcd' '--peer-key-file')
+        pass "$check_1_5_4"
+        pass "       * peer-cert-file: $cfile"
+        pass "       * peer-key-file: $kfile"
+    else
+          warn "$check_1_5_4"
+    fi
 else
     warn "$check_1_5_4"
 fi
@@ -60,7 +60,7 @@ fi
 
 check_1_5_7="1.5.7  - Ensure that the --wal-dir argument is set as appropriate (Scored)"
 if check_argument 'etcd' '-wal-dir' >/dev/null 2>&1; then
-	wdir=$(get_argument_value 'etcd' '--wal-dir')
+    wdir=$(get_argument_value 'etcd' '--wal-dir')
     pass "$check_1_5_7"
     pass "       * wal-dir: $wdir"
 else

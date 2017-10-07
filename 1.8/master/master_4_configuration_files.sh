@@ -96,11 +96,12 @@ else
     file="/etc/kubernetes/manifests/kube-scheduler.yaml"
 fi
 if [ -f $file ]; then
-  if [ "$(stat -c %U:%G $file)" -eq "root:root" ]; then
+  if [ "$(stat -c %U:%G $file)" = "root:root" ]; then
     pass "$check_1_4_6"
   else
     warn "$check_1_4_6"
-    warn "     * Wrong ownership for $file"
+    owner=$(stat -c %U:%G $file)
+    warn "     * Wrong ownership for $file:$owner"
   fi
 else
   info "$check_1_4_6"
@@ -132,11 +133,12 @@ else
     file="/etc/kubernetes/manifests/etcd.yaml"
 fi
 if [ -f $file ]; then
-  if [ "$(stat -c %U:%G $file)" -eq "root:root" ]; then
+  if [ "$(stat -c %U:%G $file)" = "root:root" ]; then
     pass "$check_1_4_8"
   else
     warn "$check_1_4_8"
-    warn "     * Wrong ownership for $file"
+    owner=$(stat -c %U:%G $directory)
+    warn "     * Wrong ownership for $file:$owner"
   fi
 else
   info "$check_1_4_8"
@@ -163,7 +165,7 @@ fi
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
 directory=$(get_argument_value 'etcd' '--data-dir')
 if [ -d $directory ]; then
-  if [ "$(stat -c %U:%G $directory)" = 'etcd:etcd' ]; then
+  if [ "$(stat -c %U:%G $directory)" = "etcd:etcd" ]; then
     pass "$check_1_4_12"
   else
     warn "$check_1_4_12"

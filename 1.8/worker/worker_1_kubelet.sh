@@ -23,7 +23,7 @@ fi
 
 check_2_1_4="2.1.4  - Ensure that the --client-ca-file argument is set as appropriate"
 if check_argument 'kubelet' '--client-ca-file' >/dev/null 2>&1; then
-	cafile=$(get_argument_value 'kubelet' '--client-ca-file')
+    cafile=$(get_argument_value 'kubelet' '--client-ca-file')
     pass "$check_2_1_4"
     pass "       * client-ca-file: $cafile"
 else
@@ -32,20 +32,20 @@ fi
 
 check_2_1_5="2.1.5  - Ensure that the --read-only-port argument is set to 0"
 if check_argument 'kubelet' '--read-only-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'kubelet' '--read-only-port' | awk '{print $1}')
-	if [ $port = "0" ]; then
-    	pass "$check_2_1_5"
-	else 
-    	warn "$check_2_1_5"
-    	warn "       * read-only-port: $port"
-	fi
+    port=$(get_argument_value 'kubelet' '--read-only-port' | awk '{print $1}')
+    if [ $port = "0" ]; then
+        pass "$check_2_1_5"
+    else
+        warn "$check_2_1_5"
+        warn "       * read-only-port: $port"
+    fi
 else
     warn "$check_2_1_5"
 fi
 
 check_2_1_6="2.1.6  - Ensure that the --streaming-connection-idle-timeout argument is not set to 0"
 if check_argument 'kubelet' '--streaming-connection-idle-timeout=0' >/dev/null 2>&1; then
-	timeout=$(get_argument_value 'kubelet' '--streaming-connection-idle-timeout')
+    timeout=$(get_argument_value 'kubelet' '--streaming-connection-idle-timeout')
     warn "$check_2_1_6"
     warn "       * streaming-connection-idle-timeout: $timeout"
 else
@@ -82,41 +82,41 @@ fi
 
 check_2_1_11="2.1.11  - Ensure that the --event-qps argument is set to 0"
 if check_argument 'kubelet' '--event-qps' >/dev/null 2>&1; then
-	event=$(get_argument_value 'kubelet' '--event-qps' | awk '{print $1}')
-	if [ $event = "0" ]; then
-    	pass "$check_2_1_11"
-	else
-	    warn "$check_2_1_11"
-	    warn "        * event-qps: $event"
-	fi
+    event=$(get_argument_value 'kubelet' '--event-qps' | awk '{print $1}')
+    if [ $event = "0" ]; then
+        pass "$check_2_1_11"
+    else
+        warn "$check_2_1_11"
+        warn "        * event-qps: $event"
+    fi
 else
     warn "$check_2_1_11"
 fi
 
 check_2_1_12="2.1.12  - Ensure that the --tls-cert-file and --tls-private-key-file arguments are set as appropriate"
 if check_argument 'kubelet' '--tls-cert-file' >/dev/null 2>&1; then
-	if check_argument 'kubelet' '--tls-private-key-file' >/dev/null 2>&1; then
-		cfile=$(get_argument_value 'kubelet' '--tls-cert-file')
-		kfile=$(get_argument_value 'kubelet' '--tls-private-key-file')
-	  	pass "$check_2_1_12"
-      	pass "        * tls-cert-file: $cfile"
-      	pass "        * tls-private-key-file: $kfile"
-	else
-	  warn "$check_2_1_12"
-	fi
+    if check_argument 'kubelet' '--tls-private-key-file' >/dev/null 2>&1; then
+        cfile=$(get_argument_value 'kubelet' '--tls-cert-file')
+        kfile=$(get_argument_value 'kubelet' '--tls-private-key-file')
+        pass "$check_2_1_12"
+        pass "        * tls-cert-file: $cfile"
+        pass "        * tls-private-key-file: $kfile"
+    else
+      warn "$check_2_1_12"
+    fi
 else
     warn "$check_2_1_12"
 fi
 
 check_2_1_13="2.1.13  - Ensure that the --cadvisor-port argument is set to 0"
 if check_argument 'kubelet' '--cadvisor-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'kubelet' '--cadvisor-port' | awk '{print $1}')
-	if [ $port = "0" ]; then
-    	pass "$check_2_1_13"
-	else
-	    warn "$check_2_1_13"
-	    warn "        * cadvisor-port: $port"
-	fi
+    port=$(get_argument_value 'kubelet' '--cadvisor-port' | awk '{print $1}')
+    if [ $port = "0" ]; then
+        pass "$check_2_1_13"
+    else
+        warn "$check_2_1_13"
+        warn "        * cadvisor-port: $port"
+    fi
 else
     warn "$check_2_1_13"
 fi

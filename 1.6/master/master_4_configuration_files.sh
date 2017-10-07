@@ -155,7 +155,7 @@ fi
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
 directory=$(get_argument_value 'etcd' '--data-dir')
 if [ -d $directory ]; then
-  if [ "$(stat -c %U:%G $directory)" = 'etcd:etcd' ]; then
+  if [ "$(stat -c %U:%G $directory)" = "etcd:etcd" ]; then
     pass "$check_1_4_12"
   else
     warn "$check_1_4_12"

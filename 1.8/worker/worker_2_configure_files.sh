@@ -2,9 +2,9 @@ info "2.2 - Configuration Files"
 
 check_2_2_1="2.2.1  - Ensure that the config file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/config" ]; then
-	file="/etc/kubernetes/config"
+    file="/etc/kubernetes/config"
 else
-	file="/etc/kubernetes/kubelet.conf"
+    file="/etc/kubernetes/kubelet.conf"
 fi
 
 if [ -f "$file" ]; then
@@ -33,9 +33,9 @@ fi
 
 check_2_2_3="2.2.3  - Ensure that the kubelet file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/kubelet" ]; then
-	file="/etc/kubernetes/kubelet"
+    file="/etc/kubernetes/kubelet"
 else
-	file="/etc/kubernetes/kubelet.conf"
+    file="/etc/kubernetes/kubelet.conf"
 fi
 
 if [ -f "$file" ]; then

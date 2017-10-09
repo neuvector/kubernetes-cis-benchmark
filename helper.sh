@@ -37,12 +37,12 @@ get_command_line_args() {
     PROC="$1"
     len=${#PROC}
     if [ $len -gt 16 ]; then
-        for PID in $(pgrep -f "$PROC")
+        for PID in $(pgrep -f -n "$PROC")
         do
             tr "\0" " " < /proc/"$PID"/cmdline
         done
     else
-        for PID in $(pgrep "$PROC")
+        for PID in $(pgrep -n "$PROC")
         do
             tr "\0" " " < /proc/"$PID"/cmdline
         done

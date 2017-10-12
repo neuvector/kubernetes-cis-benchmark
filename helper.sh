@@ -23,7 +23,7 @@ yell () {
 }
 
 yell "# ------------------------------------------------------------------------------
-# Kubernetes CIS benchmark 1.6
+# Kubernetes CIS benchmark
 #
 # NeuVector, Inc. (c) 2016-
 #
@@ -35,11 +35,18 @@ yell "# ------------------------------------------------------------------------
 #get a process command line from /proc
 get_command_line_args() {
     PROC="$1"
-
-    for PID in $(pgrep -f -n "$PROC")
-    do
-        tr "\0" " " < /proc/"$PID"/cmdline
-    done
+    len=${#PROC}
+    if [ $len -gt 16 ]; then
+        for PID in $(pgrep -f -n "$PROC")
+        do
+            tr "\0" " " < /proc/"$PID"/cmdline
+        done
+    else
+        for PID in $(pgrep -n "$PROC")
+        do
+            tr "\0" " " < /proc/"$PID"/cmdline
+        done
+    fi
 }
 
 #get an argument value from command line

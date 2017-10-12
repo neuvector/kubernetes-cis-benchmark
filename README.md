@@ -6,34 +6,35 @@ This set of scripts can be used to check the Kubernetes installation against the
 
 These scripts are devided into the set to run on the Kubernetes master nodes, worker nodes and federation nodes.
 
-For the Kubernetes version 1.8, you can use CIS Kubernetes Benchmark 1.8.
+For the Kubernetes version 1.8, you can use CIS Kubernetes Benchmark 1.8. 
 
-On the master nodes,
+On the Kubernetes 1.8 master nodes,
 ```
-$ ./master_1_8.sh
-```
-
-On the worker nodes,
-```
-$ ./worker_1_8.sh
+$ ./master.sh 1.8
 ```
 
-On the federation nodes,
+On the Kubernetes 1.8 worker nodes,
 ```
-$ ./federation_1_8.sh
+$ ./worker.sh 1.8
+```
+
+On the Kubernetes 1.8 federation nodes,
+```
+$ ./federation.sh 1.8 
+
 
 For the Kubernetes version other than 1.8, you can use CIS Kubernetes Benchmark 1.6.
 
-On the master nodes,
+On the Kubernetes 1.6 master nodes,
 ```
-$ ./master_1_6.sh
-```
-
-On the worker nodes,
-```
-$ ./worker_1_6.sh
+$ ./master.sh 1.6
 ```
 
-On the federation nodes,
+On the Kubernetes 1.6 worker nodes,
 ```
-$ ./federation_1_6.sh
+$ ./worker.sh 1.6
+```
+
+On the Kubernetes 1.6 federation nodes,
+```
+$ ./federation.sh 1.6 

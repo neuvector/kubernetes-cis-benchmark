@@ -158,8 +158,8 @@ if [ -d $directory ]; then
     warn "     * Wrong permissions for $directory:$perm"
   fi
 else
-  info "$check_1_4_11"
-  info "     * Directory not found"
+  warn "$check_1_4_11"
+  warn "     * Directory not found:$directory"
 fi
 
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
@@ -173,8 +173,8 @@ if [ -d $directory ]; then
     warn "     * Wrong ownership for $directory:$owner"
   fi
 else
-  info "$check_1_4_12"
-  info "     * Directory not found"
+  warn "$check_1_4_12"
+  warn "     * Directory not found:$directory"
 fi
 
 check_1_4_13="1.4.13  - Ensure that the admin.conf file permissions are set to 644 or more restrictive"
@@ -188,8 +188,8 @@ if [ -f $file ]; then
     warn "     * Wrong permissions for $file:$perm"
   fi
 else
-  info "$check_1_4_13"
-  info "     * File not found"
+  warn "$check_1_4_13"
+  warn "     * File not found:$file"
 fi
 
 check_1_4_14="1.4.14  - Ensure that the admin.conf file ownership is set to root:root"
@@ -203,8 +203,8 @@ if [ -f $file ]; then
     warn "     * Wrong ownership for $file:$owner"
   fi
 else
-  info "$check_1_4_14"
-  info "     * File not found"
+  warn "$check_1_4_14"
+  warn "     * File not found:$file"
 fi
 
 check_1_4_15="1.4.15  - Ensure that the scheduler.conf file permissions are set to 644 or more restrictive"
@@ -218,8 +218,8 @@ if [ -f $file ]; then
     warn "     * Wrong permissions for $file:$perm"
   fi
 else
-  info "$check_1_4_15"
-  info "     * File not found"
+  warn "$check_1_4_15"
+  warn "     * File not found:$file"
 fi
 
 check_1_4_16="1.4.16  - Ensure that the scheduler.conf file ownership is set to root:root"
@@ -233,8 +233,8 @@ if [ -f $file ]; then
     warn "     * Wrong ownership for $file:$owner"
   fi
 else
-  info "$check_1_4_16"
-  info "     * File not found"
+  warn "$check_1_4_16"
+  warn "     * File not found:$file"
 fi
 
 check_1_4_17="1.4.17  - Ensure that the controller-manager.conf file permissions are set to 644 or more restrictive"
@@ -248,8 +248,8 @@ if [ -f $file ]; then
     warn "     * Wrong permissions for $file:$perm"
   fi
 else
-  info "$check_1_4_17"
-  info "     * File not found"
+  warn "$check_1_4_17"
+  warn "     * File not found:$file"
 fi
 
 check_1_4_18="1.4.18  - Ensure that the controller-manager.conf file ownership is set to root:root"
@@ -263,6 +263,6 @@ if [ -f $file ]; then
     warn "     * Wrong ownership for $file:$owner"
   fi
 else
-  info "$check_1_4_18"
-  info "     * File not found"
+  warn "$check_1_4_18"
+  warn "     * File not found:$file"
 fi

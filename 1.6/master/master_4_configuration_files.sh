@@ -148,8 +148,8 @@ if [ -d $directory ]; then
     warn "     * Wrong permissions for $directory:$perm"
   fi
 else
-  info "$check_1_4_11"
-  info "     * Directory not found"
+  warn "$check_1_4_11"
+  warn "     * Directory not found:$directory"
 fi
 
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
@@ -163,6 +163,6 @@ if [ -d $directory ]; then
     warn "     * Wrong ownership for $directory:$owner"
   fi
 else
-  info "$check_1_4_12"
-  info "     * Directory not found"
+  warn "$check_1_4_12"
+  warn "     * Directory not found:$directory"
 fi

@@ -100,4 +100,32 @@ else
   info "$check_2_2_6"
 fi
 
+check_2_2_7="2.2.7  - Ensure that the certificate authorities file permissions are set to 644 or more restrictive"
+if check_argument 'kubelet' '--client-ca-file' >/dev/null 2>&1; then
+  file=$(get_argument_value 'kubelet' '--client-ca-file')
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
+    pass "$check_2_2_7"
+    pass "       * client-ca-file: $file"
+  else
+    warn "$check_2_2_7"
+    warn "     * Wrong permissions for $file"
+  fi
+else
+  info "$check_2_2_7"
+  info "     * --client-ca-file not set"
+fi
 
+check_2_2_8="2.2.8  - Ensure that the client certificate authorities file ownership is set to root:root"
+if check_argument 'kubelet' '--client-ca-file' >/dev/null 2>&1; then
+  file=$(get_argument_value 'kubelet' '--client-ca-file')
+  if [ "$(stat -c %u%g $file)" -eq 00 ]; then
+    pass "$check_2_2_8"
+    pass "       * client-ca-file: $file"
+  else
+    warn "$check_2_2_8"
+    warn "     * Wrong ownership for $file"
+  fi
+else
+  info "$check_2_2_8"
+  info "     * --client-ca-file not set"
+fi

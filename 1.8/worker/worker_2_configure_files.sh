@@ -3,12 +3,15 @@ info "2.2 - Configuration Files"
 check_2_2_1="2.2.1  - Ensure that the config file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/config" ]; then
     file="/etc/kubernetes/config"
+elif [ -f "/var/lib/kubelet/kubeconfig" ]; then
+    # kops
+    file="/var/lib/kubelet/kubeconfig"
 else
     file="/etc/kubernetes/kubelet.conf"
 fi
 
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_1"
   else
     warn "$check_2_2_1"
@@ -34,12 +37,15 @@ fi
 check_2_2_3="2.2.3  - Ensure that the kubelet file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/kubelet" ]; then
     file="/etc/kubernetes/kubelet"
+elif [ -f "/etc/sysconfig/kubelet" ]; then
+    # kops
+    file="/etc/sysconfig/kubelet"
 else
     file="/etc/kubernetes/kubelet.conf"
 fi
 
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_3"
   else
     warn "$check_2_2_3"
@@ -63,10 +69,15 @@ else
 fi
 
 check_2_2_5="2.2.5  - Ensure that the proxy file permissions are set to 644 or more restrictive"
-file="/etc/kubernetes/proxy"
+if [ -f "/var/lib/kube-proxy/kubeconfig" ]; then
+    # kops
+    file="/var/lib/kube-proxy/kubeconfig"
+else
+    file="/etc/kubernetes/proxy"
+fi
 
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_5"
   else
     warn "$check_2_2_5"

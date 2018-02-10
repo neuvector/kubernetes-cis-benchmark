@@ -3,6 +3,9 @@ info "1.4 - Configuration Files"
 check_1_4_1="1.4.1  - Ensure that the API server pod specification file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
     file="/etc/kubernetes/manifests/kube-apiserver.json"
+elif [ -f "/etc/kubernetes/manifests/kube-apiserver.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-apiserver.manifest"
 else
     file="/etc/kubernetes/manifests/kube-apiserver.yaml"
 fi
@@ -21,6 +24,9 @@ fi
 check_1_4_2="1.4.2  - Ensure that the API server pod specification file ownership is set to root:root"
 if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
     file="/etc/kubernetes/manifests/kube-apiserver.json"
+elif [ -f "/etc/kubernetes/manifests/kube-apiserver.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-apiserver.manifest"
 else
     file="/etc/kubernetes/manifests/kube-apiserver.yaml"
 fi
@@ -37,7 +43,10 @@ fi
 
 check_1_4_3="1.4.3  - Ensure that the controller manager pod specification file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/manifests/kube-controller-manager.json" ]; then
-	file="/etc/kubernetes/manifests/kube-controller-manager.json"
+    file="/etc/kubernetes/manifests/kube-controller-manager.json"
+elif [ -f "/etc/kubernetes/manifests/kube-controller-manager.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-controller-manager.manifest"
 else
     file="/etc/kubernetes/manifests/kube-controller-manager.yaml"
 fi
@@ -55,7 +64,10 @@ fi
 
 check_1_4_4="1.4.4  - Ensure that the controller manager pod specification file ownership is set to root:root"
 if [ -f "/etc/kubernetes/manifests/kube-controller-manager.json" ]; then
-	file="/etc/kubernetes/manifests/kube-controller-manager.json"
+    file="/etc/kubernetes/manifests/kube-controller-manager.json"
+elif [ -f "/etc/kubernetes/manifests/kube-controller-manager.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-controller-manager.manifest"
 else
     file="/etc/kubernetes/manifests/kube-controller-manager.yaml"
 fi
@@ -74,6 +86,9 @@ fi
 check_1_4_5="1.4.5  - Ensure that the scheduler pod specification file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
     file="/etc/kubernetes/manifests/kube-scheduler.json"
+elif [ -f "/etc/kubernetes/manifests/kube-scheduler.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-scheduler.manifest"
 else
     file="/etc/kubernetes/manifests/kube-scheduler.yaml"
 fi
@@ -92,6 +107,9 @@ fi
 check_1_4_6="1.4.6  - Ensure that the scheduler pod specification file ownership is set to root:root"
 if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
     file="/etc/kubernetes/manifests/kube-scheduler.json"
+elif [ -f "/etc/kubernetes/manifests/kube-scheduler.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/kube-scheduler.manifest"
 else
     file="/etc/kubernetes/manifests/kube-scheduler.yaml"
 fi
@@ -111,11 +129,15 @@ fi
 check_1_4_7="1.4.7  - Ensure that the etcd pod specification file permissions are set to 644 or more restrictive"
 if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
     file="/etc/kubernetes/manifests/etcd.json"
+elif [ -f "/etc/kubernetes/manifests/etcd.manifest" ]; then
+    # kops
+    # Also this file is a symlink, hence 'stat -L' below.
+    file="/etc/kubernetes/manifests/etcd.manifest"
 else
     file="/etc/kubernetes/manifests/etcd.yaml"
 fi
 if [ -f $file ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
+  if [ "$(stat -L -c %a $file)" -eq 644 -o "$(stat -L -c %a $file)" -eq 640 -o "$(stat -L -c %a $file)" -eq 600 ]; then
     pass "$check_1_4_7"
   else
     warn "$check_1_4_7"
@@ -129,6 +151,9 @@ fi
 check_1_4_8="1.4.8  - Ensure that the etcd pod specification file ownership is set to root:root"
 if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
     file="/etc/kubernetes/manifests/etcd.json"
+elif [ -f "/etc/kubernetes/manifests/etcd.manifest" ]; then
+    # kops
+    file="/etc/kubernetes/manifests/etcd.manifest"
 else
     file="/etc/kubernetes/manifests/etcd.yaml"
 fi
@@ -149,7 +174,7 @@ check_1_4_9="1.4.9  - Ensure that the Container Network Interface file permissio
 check_1_4_10="1.4.10  - Ensure that the Container Network Interface file ownership is set to root:root"
 check_1_4_11="1.4.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive"
 directory=$(get_argument_value 'etcd' '--data-dir')
-if [ -d $directory ]; then
+if [ -d "$directory" ]; then
   if [ "$(stat -c %a $directory)" -eq 700 ]; then
     pass "$check_1_4_11"
   else
@@ -164,7 +189,7 @@ fi
 
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
 directory=$(get_argument_value 'etcd' '--data-dir')
-if [ -d $directory ]; then
+if [ -d "$directory" ]; then
   if [ "$(stat -c %U:%G $directory)" = "etcd:etcd" ]; then
     pass "$check_1_4_12"
   else

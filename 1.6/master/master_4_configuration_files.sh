@@ -138,7 +138,7 @@ fi
 check_1_4_9="1.4.9  - Ensure that the flanneld file permissions are set to 644 or more restrictive"
 check_1_4_10="1.4.10  - Ensure that the flanneld file ownership is set to root:root"
 check_1_4_11="1.4.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive"
-directory=$(get_argument_value 'etcd' '--data-dir')
+directory=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir')
 if [ -d $directory ]; then
   if [ "$(stat -c %a $directory)" -eq 700 ]; then
     pass "$check_1_4_11"
@@ -153,7 +153,7 @@ else
 fi
 
 check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
-directory=$(get_argument_value 'etcd' '--data-dir')
+directory=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir')
 if [ -d $directory ]; then
   if [ "$(stat -c %U:%G $directory)" = "etcd:etcd" ]; then
     pass "$check_1_4_12"

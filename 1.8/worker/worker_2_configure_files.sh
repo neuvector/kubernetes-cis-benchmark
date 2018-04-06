@@ -101,8 +101,8 @@ else
 fi
 
 check_2_2_7="2.2.7  - Ensure that the certificate authorities file permissions are set to 644 or more restrictive"
-if check_argument 'kubelet' '--client-ca-file' >/dev/null 2>&1; then
-  file=$(get_argument_value 'kubelet' '--client-ca-file')
+if check_argument "$CIS_KUBELET_CMD" '--client-ca-file' >/dev/null 2>&1; then
+  file=$(get_argument_value "$CIS_KUBELET_CMD" '--client-ca-file')
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_7"
     pass "       * client-ca-file: $file"
@@ -116,8 +116,8 @@ else
 fi
 
 check_2_2_8="2.2.8  - Ensure that the client certificate authorities file ownership is set to root:root"
-if check_argument 'kubelet' '--client-ca-file' >/dev/null 2>&1; then
-  file=$(get_argument_value 'kubelet' '--client-ca-file')
+if check_argument "$CIS_KUBELET_CMD" '--client-ca-file' >/dev/null 2>&1; then
+  file=$(get_argument_value "$CIS_KUBELET_CMD" '--client-ca-file')
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_2_2_8"
     pass "       * client-ca-file: $file"

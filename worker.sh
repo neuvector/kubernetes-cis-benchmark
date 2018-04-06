@@ -6,6 +6,8 @@
 #
 # ------------------------------------------------------------------------------
 
+CIS_KUBELET_CMD=${CIS_KUBELET_CMD:-kubelet}
+
 # Load dependencies
 . ./helper.sh
 

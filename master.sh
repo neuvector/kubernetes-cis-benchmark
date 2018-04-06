@@ -6,6 +6,11 @@
 #
 # ------------------------------------------------------------------------------
 
+CIS_APISERVER_CMD=${CIS_APISERVER_CMD:-kube-apiserver}
+CIS_MANAGER_CMD=${CIS_MANAGER_CMD:-kube-controller-manager}
+CIS_SCHEDULER_CMD=${CIS_SCHEDULER_CMD:-kube-scheduler}
+CIS_ETCD_CMD=${CIS_ETCD_CMD:-etcd}
+
 # Load dependencies
 . ./helper.sh
 

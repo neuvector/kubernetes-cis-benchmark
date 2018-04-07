@@ -36,11 +36,8 @@ yell "# ------------------------------------------------------------------------
 get_command_line_args() {
     PROC="$1"
     len=${#PROC}
-    if [ $len -gt 16 ]; then
-        for PID in $(pgrep -f -n "$PROC")
-        do
-            tr "\0" " " < /proc/"$PID"/cmdline
-        done
+    if [ $len -gt 15 ]; then
+		ps aux|grep  "$CMD "|grep -v "grep" |sed "s/.*$CMD \(.*\)/\1/g"
     else
         for PID in $(pgrep -n "$PROC")
         do

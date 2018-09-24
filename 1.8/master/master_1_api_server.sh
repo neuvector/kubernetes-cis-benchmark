@@ -177,7 +177,7 @@ check_1_1_20="1.1.20  - Ensure that the --token-auth-file parameter is not set"
 if check_argument "$CIS_APISERVER_CMD" '--token-auth-file' >/dev/null 2>&1; then
     warn "$check_1_1_20"
 else
-    pass "$check_1_1_21"
+    pass "$check_1_1_20"
 fi
 
 check_1_1_21="1.1.21  - Ensure that the --kubelet-certificate-authority argument is set as appropriate"

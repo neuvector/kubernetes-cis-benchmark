@@ -9,11 +9,24 @@
 CIS_KUBELET_CMD=${CIS_KUBELET_CMD:-kubelet}
 
 # Load dependencies
-. ./helper.sh
+v_151="1.5.1"
+v_141="1.4.1"
+
+case $1 in
+  $v_151)
+    . ./helper1_5_1.sh
+    ;;
+  $v_141)
+    . ./helper1_4_1.sh
+    ;;
+  *)
+    . ./helper.sh
+    ;;
+esac
 
 ver=$1
 if [ -z "$1" ]; then
-    warn "usage: ./worker.sh version"
+  warn "usage: ./worker.sh version"
 	exit
 fi
 # Check for required program(s)
@@ -24,11 +37,10 @@ done
 
 # Load all the tests from worker/ and run them
 main () {
-  info "2 - Worker Node Security Configuration"
 
-  for test in $ver/worker/worker_*.sh
+  for audit in $ver/worker/*.sh
   do
-     . ./"$test"
+     . ./"$audit"
   done
 }
 

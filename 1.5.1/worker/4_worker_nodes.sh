@@ -161,54 +161,54 @@ fi
 
 check_4_2_2="4.2.2  - Ensure that the --authorization-mode argument is not set to AlwaysAllow (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--authorization-mode=AlwaysAllow' >/dev/null 2>&1; then
-    warn "$check_4_2_3"
+    warn "$check_4_2_2"
 else
-    pass "$check_4_2_3"
+    pass "$check_4_2_2"
 fi
 
 check_4_2_3="4.2.3  - Ensure that the --client-ca-file argument is set as appropriate (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--client-ca-file' >/dev/null 2>&1; then
     cafile=$(get_argument_value "$CIS_KUBELET_CMD" '--client-ca-file')
-    pass "$check_4_2_4"
+    pass "$check_4_2_3"
     pass "       * client-ca-file: $cafile"
 else
-    warn "$check_4_2_4"
+    warn "$check_4_2_3"
 fi
 
 check_4_2_4="4.2.4  - Ensure that the --read-only-port argument is set to 0 (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--read-only-port' >/dev/null 2>&1; then
     port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | awk '{print $1}')
     if [ $port = "0" ]; then
-        pass "$check_4_2_5"
+        pass "$check_4_2_4"
     else
-        warn "$check_4_2_5"
+        warn "$check_4_2_4"
         warn "       * read-only-port: $port"
     fi
 else
-    warn "$check_4_2_5"
+    warn "$check_4_2_4"
 fi
 
 check_4_2_5="4.2.5  - Ensure that the --streaming-connection-idle-timeout argument is not set to 0 (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--streaming-connection-idle-timeout=0' >/dev/null 2>&1; then
     timeout=$(get_argument_value "$CIS_KUBELET_CMD" '--streaming-connection-idle-timeout')
-    warn "$check_4_2_6"
+    warn "$check_4_2_5"
     warn "       * streaming-connection-idle-timeout: $timeout"
 else
-    pass "$check_4_2_6"
+    pass "$check_4_2_5"
 fi
 
 check_4_2_6="4.2.6  - Ensure that the --protect-kernel-defaults argument is set to true (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--protect-kernel-defaults=true' >/dev/null 2>&1; then
-    pass "$check_4_2_7"
+    pass "$check_4_2_6"
 else
-    warn "$check_4_2_7"
+    warn "$check_4_2_6"
 fi
 
 check_4_2_7="4.2.7  - Ensure that the --make-iptables-util-chains argument is set to true (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--make-iptables-util-chains=true' >/dev/null 2>&1; then
-    pass "$check_4_2_8"
+    pass "$check_4_2_7"
 else
-    warn "$check_4_2_8"
+    warn "$check_4_2_7"
 fi
 
 #todo fixit

@@ -2,39 +2,29 @@
 
 ![CIS Kubernetes Benchmark output](https://raw.githubusercontent.com/neuvector/kubernetes-cis-benchmark/master/bench.png "CIS Kubernetes Benchmark output")
 
-This set of scripts can be used to check the Kubernetes installation against the best-practices. CIS Kubernetes Benchmark 1.6 and 1.8 are implemented.
+This set of scripts can be used to check the Kubernetes installation against the best-practices.
 
-These scripts are devided into the set to run on the Kubernetes master nodes, worker nodes and federation nodes.
+### Supported CIS Kubernetes versions
 
-For the Kubernetes version 1.8, you can use CIS Kubernetes Benchmark 1.8. 
+| CIS Kubernetes Benchmark Version | Kubernetes versions |
+|---|---|
+| 1.0.0 | 1.6 |
+| 1.2.0 | 1.8 |
+| 1.5.1 | 1.15+ |
 
-On the Kubernetes 1.8 master nodes,
+### Running the benchmark checks
+
+On the Kubernetes master nodes,
 ```
-$ ./master.sh 1.8
-```
-
-On the Kubernetes 1.8 worker nodes,
-```
-$ ./worker.sh 1.8
-```
-
-On the Kubernetes 1.8 federation nodes,
-```
-$ ./federation.sh 1.8 
-
-
-For the Kubernetes version other than 1.8, you can use CIS Kubernetes Benchmark 1.6.
-
-On the Kubernetes 1.6 master nodes,
-```
-$ ./master.sh 1.6
+$ ./master.sh <CIS_Version>
 ```
 
-On the Kubernetes 1.6 worker nodes,
+On the Kubernetes worker nodes,
 ```
-$ ./worker.sh 1.6
+$ ./worker.sh <CIS_Version>
 ```
 
-On the Kubernetes 1.6 federation nodes,
+On the Kubernetes federation nodes,
 ```
-$ ./federation.sh 1.6 
+$ ./federation.sh <CIS_Version>
+

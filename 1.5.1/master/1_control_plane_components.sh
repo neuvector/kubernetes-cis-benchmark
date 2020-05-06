@@ -131,8 +131,18 @@ fi
 
 #todo find CNI file location
 check_1_1_9="1.1.9  - Ensure that the Container Network Interface file permissions are set to 644 or more restrictive (Not Scored)"
+info "$check_1_1_9
+       Audit:
+       Run the below command (based on the file location on your system) on the master node. For example,
+       stat -c %a <path/to/cni/files>
+       Verify that the permissions are 644 or more restrictive."
 
 check_1_1_10="1.1.10  - Ensure that the Container Network Interface file ownership is set to root:root (Not Scored)"
+info "$check_1_1_10
+       Audit:
+       Run the below command (based on the file location on your system) on the master node. For example,
+       stat -c %U:%G <path/to/cni/files>
+       Verify that the ownership is set to root:root."
 
 check_1_1_11="1.1.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive (Scored)"
 file=""
@@ -244,8 +254,9 @@ fi
 
 check_1_1_19="1.1.19  - Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Scored)"
 file="/etc/kubernetes/pki/"
+files=$(find $file)
 pass=true
-for f in ${file}*; do
+for f in ${files}; do
   if [ "$(stat -c %u%g $f)" != 00 ]; then
     pass=false;
     break;
@@ -621,12 +632,8 @@ fi
 check_1_2_35="1.2.35  - Ensure that the API Server only makes use of Strong Cryptographic Ciphers (Not Scored)"
 if check_argument "$CIS_APISERVER_CMD" '--tls-cipher-suites' >/dev/null 2>&1; then
     ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|awk '{print $1}')
-    if [ "$ciphers" == *"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"*
-         -o "$ciphers" == *"TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"*
-         -o "$ciphers" == *"TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"*
-         -o "$ciphers" == *"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"*
-         -o "$ciphers" == *"TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"*
-         -o "$ciphers" == *"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"* ]; then
+    found=$(echo $ciphers| sed -rn '/(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384|TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)/p')
+    if [ ! -z "$found" ]; then
       pass "$check_1_2_35"
     else
       warn "$check_1_2_35"
@@ -683,7 +690,8 @@ fi
 check_1_3_6="1.3.6  - Ensure that the RotateKubeletServerCertificate argument is set to true (Scored)"
 if check_argument "$CIS_MANAGER_CMD" '--feature-gates' >/dev/null 2>&1; then
     serverCert=$(get_argument_value "$CIS_MANAGER_CMD" '--feature-gates')
-    if [[ "$serverCert" == *"RotateKubeletServerCertificate=true"* ]]; then
+    found=$(echo $serverCert| grep 'RotateKubeletServerCertificate=true')
+    if [ ! -z $found ]; then
       pass "$check_1_3_6"
     else
       warn "$check_1_3_6"

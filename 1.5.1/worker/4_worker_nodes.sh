@@ -255,18 +255,12 @@ else
 fi
 
 check_4_2_12="4.2.12  - Ensure that the RotateKubeletServerCertificate argument is set to true (Scored)"
-if check_argument "$CIS_KUBELET_CMD" '--tls-cert-file' >/dev/null 2>&1; then
-    if check_argument "$CIS_KUBELET_CMD" '--tls-private-key-file' >/dev/null 2>&1; then
-        cfile=$(get_argument_value "$CIS_KUBELET_CMD" '--tls-cert-file')
-        kfile=$(get_argument_value "$CIS_KUBELET_CMD" '--tls-private-key-file')
-        pass "$check_4_2_12"
-        pass "        * tls-cert-file: $cfile"
-        pass "        * tls-private-key-file: $kfile"
-    else
-      warn "$check_4_2_12"
-    fi
-else
+file="/etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
+found=$(sed -rn '/--feature-gates=RotateKubeletServerCertificate=true/p' $file)
+if [ -z "$found" ]; then
     warn "$check_4_2_12"
+else
+    pass "$check_4_2_12"
 fi
 
 check_4_2_13="4.2.13  - Ensure that the Kubelet only makes use of Strong Cryptographic Ciphers (Not Scored)"

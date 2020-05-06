@@ -15,6 +15,8 @@ CIS_PROXY_CMD=${CIS_PROXY_CMD:-kube-proxy}
 # Load dependencies
 v_151="1.5.1"
 v_141="1.4.1"
+v_120="1.2.0"
+v_100="1.0.0"
 
 case $1 in
   $v_151)

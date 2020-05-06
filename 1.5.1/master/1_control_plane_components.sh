@@ -131,8 +131,18 @@ fi
 
 #todo find CNI file location
 check_1_1_9="1.1.9  - Ensure that the Container Network Interface file permissions are set to 644 or more restrictive (Not Scored)"
+info "$check_1_1_9
+       Audit:
+       Run the below command (based on the file location on your system) on the master node. For example,
+       stat -c %a <path/to/cni/files>
+       Verify that the permissions are 644 or more restrictive."
 
 check_1_1_10="1.1.10  - Ensure that the Container Network Interface file ownership is set to root:root (Not Scored)"
+info "$check_1_1_10
+       Audit:
+       Run the below command (based on the file location on your system) on the master node. For example,
+       stat -c %U:%G <path/to/cni/files>
+       Verify that the ownership is set to root:root."
 
 check_1_1_11="1.1.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive (Scored)"
 file=""

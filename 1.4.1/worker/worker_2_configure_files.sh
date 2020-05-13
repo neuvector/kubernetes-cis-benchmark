@@ -1,17 +1,10 @@
 info "2.2 - Configuration Files"
 
-check_2_2_1="2.2.1  - Ensure that the config file permissions are set to 644 or more restrictive"
-if [ -f "/etc/kubernetes/config" ]; then
-    file="/etc/kubernetes/config"
-elif [ -f "/var/lib/kubelet/kubeconfig" ]; then
-    # kops
-    file="/var/lib/kubelet/kubeconfig"
-else
-    file="/etc/kubernetes/kubelet.conf"
-fi
+check_2_2_1="2.2.1  - Ensure that the kubelet service file permissions are set to 644 or more restrictive"
+file="/etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
 
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_1"
   else
     warn "$check_2_2_1"
@@ -22,41 +15,36 @@ else
   info "     * File not found"
 fi
 
-check_2_2_2="2.2.2  - Ensure that the config file ownership is set to root:root"
+check_2_2_2="2.2.2  - Ensure that the kubelet.conf file permissions are set to 644 or more restrictive"
+file="/etc/kubernetes/kubelet.conf"
 if [ -f "$file" ]; then
-  if [ "$(stat -c %u%g $file)" -eq 00 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_2"
   else
     warn "$check_2_2_2"
-    warn "     * Wrong ownership for $file"
-  fi
-else
-  info "$check_2_2_2"
-fi
-
-check_2_2_3="2.2.3  - Ensure that the kubelet file permissions are set to 644 or more restrictive"
-if [ -f "/etc/kubernetes/kubelet" ]; then
-    file="/etc/kubernetes/kubelet"
-elif [ -f "/etc/sysconfig/kubelet" ]; then
-    # kops
-    file="/etc/sysconfig/kubelet"
-else
-    file="/etc/kubernetes/kubelet.conf"
-fi
-
-if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
-    pass "$check_2_2_3"
-  else
-    warn "$check_2_2_3"
     warn "     * Wrong permissions for $file"
   fi
 else
-  info "$check_2_2_3"
+  info "$check_2_2_2"
   info "     * File not found"
 fi
 
-check_2_2_4="2.2.4  - Ensure that the kubelet file ownership is set to root:root"
+
+check_2_2_3="2.2.3  - Ensure that the kubelet.conf file ownership is set to root:root"
+file="/etc/kubernetes/kubelet.conf"
+if [ -f "$file" ]; then
+  if [ "$(stat -c %u%g $file)" -eq 00 ]; then
+    pass "$check_2_2_3"
+  else
+    warn "$check_2_2_3"
+    warn "     * Wrong ownership for $file"
+  fi
+else
+  info "$check_2_2_3"
+fi
+
+check_2_2_4="2.2.4  - Ensure that the kubelet service file ownership is set to root:root"
+file="/etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_2_2_4"
@@ -68,16 +56,14 @@ else
   info "$check_2_2_4"
 fi
 
-check_2_2_5="2.2.5  - Ensure that the proxy file permissions are set to 644 or more restrictive"
-if [ -f "/var/lib/kube-proxy/kubeconfig" ]; then
-    # kops
-    file="/var/lib/kube-proxy/kubeconfig"
-else
-    file="/etc/kubernetes/proxy"
+check_2_2_5="2.2.5  - Ensure that the proxy kubeconfig file permissions are set to 644 or more restrictive"
+file=""
+if check_argument "$CIS_PROXY_CMD" '--kubeconfig' >/dev/null 2>&1; then
+  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|awk '{print $1}')
 fi
 
 if [ -f "$file" ]; then
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_5"
   else
     warn "$check_2_2_5"
@@ -85,10 +71,14 @@ if [ -f "$file" ]; then
   fi
 else
   info "$check_2_2_5"
-  info "     * File not found"
+  info "     * --kubeconfig not set"
 fi
 
-check_2_2_6="2.2.6  - Ensure that the proxy file ownership is set to root:root"
+check_2_2_6="2.2.6  - Ensure that the proxy kubeconfig file ownership is set to root:root"
+file=""
+if check_argument "$CIS_PROXY_CMD" '--kubeconfig' >/dev/null 2>&1; then
+  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|awk '{print $1}')
+fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
     pass "$check_2_2_6"
@@ -98,12 +88,13 @@ if [ -f "$file" ]; then
   fi
 else
   info "$check_2_2_6"
+  info "     * --kubeconfig not set"
 fi
 
 check_2_2_7="2.2.7  - Ensure that the certificate authorities file permissions are set to 644 or more restrictive"
 if check_argument "$CIS_KUBELET_CMD" '--client-ca-file' >/dev/null 2>&1; then
   file=$(get_argument_value "$CIS_KUBELET_CMD" '--client-ca-file')
-  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
+  if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
     pass "$check_2_2_7"
     pass "       * client-ca-file: $file"
   else

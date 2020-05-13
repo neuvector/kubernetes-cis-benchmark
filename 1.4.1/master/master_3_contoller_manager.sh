@@ -43,3 +43,23 @@ if check_argument "$CIS_MANAGER_CMD" '--root-ca-file' >/dev/null 2>&1; then
 else
     warn "$check_1_3_5"
 fi
+
+check_1_3_6="1.3.6  - Ensure that the RotateKubeletServerCertificate argument is set to true"
+if check_argument "$CIS_MANAGER_CMD" '--feature-gates' >/dev/null 2>&1; then
+    serverCert=$(get_argument_value "$CIS_MANAGER_CMD" '--feature-gates')
+    found=$(echo $serverCert| grep 'RotateKubeletServerCertificate=true')
+    if [ ! -z $found ]; then
+      pass "$check_1_3_6"
+    else
+      warn "$check_1_3_6"
+    fi
+else
+    warn "$check_1_3_6"
+fi
+
+check_1_3_7="1.3.7  - Ensure that the --address argument is set to 127.0.0.1"
+if get_argument_value "$CIS_MANAGER_CMD" '--address'| grep '127.0.0.1' >/dev/null 2>&1; then
+    pass "$check_1_3_7"
+else
+    warn "$check_1_3_7"
+fi

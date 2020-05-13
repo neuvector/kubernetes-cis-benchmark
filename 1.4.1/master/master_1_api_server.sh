@@ -97,20 +97,20 @@ else
 fi
 
 check_1_1_12="1.1.12  - [DEPRECATED] Ensure that the admission control plugin DenyEscalatingExec is set"
-info "$check_1_1_12"
+pass "$check_1_1_12"
 
-check_1_1_13="1.1.13  - Ensure that the admission control policy is set to SecurityContextDeny"
-if get_argument_value "$CIS_APISERVER_CMD" '--admission-control'| grep 'SecurityContextDeny' >/dev/null 2>&1; then
+check_1_1_13="1.1.13  - Ensure that the admission control plugin SecurityContextDeny is set (Not Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--enable-admission-plugins'| grep 'SecurityContextDeny' >/dev/null 2>&1; then
     pass "$check_1_1_13"
 else
     warn "$check_1_1_13"
 fi
 
-check_1_1_14="1.1.14  - Ensure that the admission control policy is set to NamespaceLifecycle"
-if get_argument_value "$CIS_APISERVER_CMD" '--admission-control'| grep 'NamespaceLifecycle' >/dev/null 2>&1; then
-    pass "$check_1_1_14"
-else
+check_1_1_14="1.1.14  - Ensure that the admission control plugin NamespaceLifecycle is set (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--disable-admission-plugins'| grep 'NamespaceLifecycle' >/dev/null 2>&1; then
     warn "$check_1_1_14"
+else
+    pass "$check_1_1_14"
 fi
 
 check_1_1_15="1.1.15  - Ensure that the --audit-log-path argument is set as appropriate"
@@ -276,61 +276,81 @@ else
     warn "$check_1_1_30"
 fi
 
-check_1_1_31="1.1.31  - Ensure that the --authorization-mode argument is set to Node"
-if get_argument_value "$CIS_APISERVER_CMD" '--authorization-mode'| grep 'Node' >/dev/null 2>&1; then
-    pass "$check_1_1_31"
+check_1_1_31="1.1.31  - Ensure that the API Server only makes use of Strong Cryptographic Ciphers (Not Scored)"
+if check_argument "$CIS_APISERVER_CMD" '--tls-cipher-suites' >/dev/null 2>&1; then
+    ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|awk '{print $1}')
+    found=$(echo $ciphers| sed -rn '/(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384|TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)/p')
+    if [ ! -z "$found" ]; then
+      pass "$check_1_1_31"
+    else
+      warn "$check_1_1_31"
+    fi
 else
     warn "$check_1_1_31"
 fi
 
-check_1_1_32="1.1.32  - Ensure that the admission control policy is set to NodeRestriction"
-if get_argument_value "$CIS_APISERVER_CMD" '--admission-control'| grep 'NodeRestriction' >/dev/null 2>&1; then
+check_1_1_32="1.1.32  - Ensure that the --authorization-mode argument includes Node (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--authorization-mode'| grep 'Node' >/dev/null 2>&1; then
     pass "$check_1_1_32"
 else
     warn "$check_1_1_32"
 fi
 
-check_1_1_33="1.1.33  - Ensure that the --experimental-encryption-provider-config argument is set as appropriate"
-if get_argument_value "$CIS_APISERVER_CMD" '--experimental-encryption-provider-config'| grep 'EncryptionConfig' >/dev/null 2>&1; then
+check_1_1_33="1.1.33  - Ensure that the admission control plugin NodeRestriction is set (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--enable-admission-plugins'| grep 'NodeRestriction' >/dev/null 2>&1; then
     pass "$check_1_1_33"
 else
     warn "$check_1_1_33"
 fi
 
-check_1_1_34="1.1.34  - Ensure that the encryption provider is set to aescbc"
-if get_argument_value "$CIS_APISERVER_CMD" '--experimental-encryption-provider-config'| grep 'EncryptionConfig' >/dev/null 2>&1; then
-    encryptionConfig=$(get_argument_value "$CIS_APISERVER_CMD" '--experimental-encryption-provider-config')
-    if sed ':a;N;$!ba;s/\n/ /g' $encryptionConfig |grep "providers:\s* - aescbc" >/dev/null 2>&1; then
-        pass "$check_1_1_34"
-    else
-        warn "$check_1_1_34"
-    fi
+check_1_1_34="1.1.34  - Ensure that the --encryption-provider-config argument is set as appropriate (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--encryption-provider-config'| grep 'EncryptionConfig' >/dev/null 2>&1; then
+    pass "$check_1_1_34"
 else
     warn "$check_1_1_34"
 fi
 
-check_1_1_35="1.1.35  - Ensure that the admission control policy is set to EventRateLimit"
-if get_argument_value "$CIS_APISERVER_CMD" '--admission-control'| grep 'EventRateLimit' >/dev/null 2>&1; then
-    pass "$check_1_1_35"
-    admissionctrl=$(get_argument_value "$CIS_APISERVER_CMD" '--admission-control')
-    pass "        * : $admissionctrl"
+check_1_1_35="1.1.35  - Ensure that the encryption provider is set to aescbc (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--experimental-encryption-provider-config'| grep 'EncryptionConfig' >/dev/null 2>&1; then
+    encryptionConfig=$(get_argument_value "$CIS_APISERVER_CMD" '--experimental-encryption-provider-config')
+    if sed ':a;N;$!ba;s/\n/ /g' $encryptionConfig |grep "providers:\s* - aescbc" >/dev/null 2>&1; then
+        pass "$check_1_1_35"
+    else
+        warn "$check_1_1_35"
+    fi
 else
     warn "$check_1_1_35"
 fi
 
-check_1_1_36="1.1.36  - Ensure that the AdvancedAuditing argument is not set to false"
-if get_argument_value "$CIS_APISERVER_CMD" '--feature-gates'| grep 'AdvancedAuditing=false' >/dev/null 2>&1; then
-    warn "$check_1_1_36"
-else
+check_1_1_36="1.1.36  - Ensure that the admission control plugin EventRateLimit is set (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--enable-admission-plugins'| grep 'EventRateLimit' >/dev/null 2>&1; then
     pass "$check_1_1_36"
+    admissionctrl=$(get_argument_value "$CIS_APISERVER_CMD" '--enable-admission-plugins')
+    pass "        * : $admissionctrl"
+else
+    warn "$check_1_1_36"
 fi
 
-check_1_1_37="1.1.37  - Ensure that the --request-timeout argument is set as appropriate"
-if check_argument "$CIS_APISERVER_CMD" '--request-timeout' >/dev/null 2>&1; then
-    requestTimeout=$(get_argument_value "$CIS_APISERVER_CMD" '--request-timeout')
+check_1_1_37="1.1.37  - Ensure that the AdvancedAuditing argument is not set to false"
+if get_argument_value "$CIS_APISERVER_CMD" '--feature-gates'| grep 'AdvancedAuditing=false' >/dev/null 2>&1; then
     warn "$check_1_1_37"
-    warn "        * request-timeout: $requestTimeout"
 else
     pass "$check_1_1_37"
+fi
+
+check_1_1_38="1.1.38  - Ensure that the --request-timeout argument is set as appropriate"
+if check_argument "$CIS_APISERVER_CMD" '--request-timeout' >/dev/null 2>&1; then
+    requestTimeout=$(get_argument_value "$CIS_APISERVER_CMD" '--request-timeout')
+    warn "$check_1_1_38"
+    warn "        * request-timeout: $requestTimeout"
+else
+    pass "$check_1_1_38"
+fi
+
+check_1_1_39="1.1.39  - Ensure that the --authorization-mode argument includes RBAC (Scored)"
+if get_argument_value "$CIS_APISERVER_CMD" '--authorization-mode'| grep 'RBAC' >/dev/null 2>&1; then
+    pass "$check_1_1_39"
+else
+    warn "$check_1_1_39"
 fi
 

@@ -58,21 +58,23 @@ else
     pass "$check_1_5_6"
 fi
 
-check_1_5_7="1.5.7  - Ensure that the --wal-dir argument is set as appropriate (Scored)"
-if check_argument "$CIS_ETCD_CMD" '--wal-dir' >/dev/null 2>&1; then
-    wdir=$(get_argument_value "$CIS_ETCD_CMD" '--wal-dir')
-    pass "$check_1_5_7"
-    pass "       * wal-dir: $wdir"
+check_1_5_7="1.5.7  - Ensure that a unique Certificate Authority is used for etcd"
+if check_argument "$CIS_ETCD_CMD" '--trusted-ca-file' >/dev/null 2>&1; then
+    if check_argument "$CIS_APISERVER_CMD" '--client-ca-file' >/dev/null 2>&1; then
+        tfile=$(get_argument_value "$CIS_ETCD_CMD" '--trusted-ca-file')
+        cfile=$(get_argument_value "$CIS_APISERVER_CMD" '--client-ca-file')
+        if [ "$tfile" = "$cfile" ]; then
+            pass "$check_1_5_7"
+            pass "       * trusted-ca-file: $tfile"
+            pass "       * client-ca-file: $cfile"
+        else
+          warn "$check_1_5_7"
+        fi
+    else
+        warn "$check_1_5_7"
+        warn "       * client-ca-file doesn't exist"
+    fi
 else
     warn "$check_1_5_7"
+    warn "       * trusted-ca-file doesn't exist"
 fi
-
-check_1_5_8="1.5.8  - Ensure that the --max-wals argument is set to 0 (Scored)"
-if check_argument "$CIS_ETCD_CMD" '--max-wals=0' >/dev/null 2>&1; then
-    pass "$check_1_5_8"
-else
-    warn "$check_1_5_8"
-fi
-
-#TODO
-check_1_5_9="1.5.9  - Ensure that a unique Certificate Authority is used for etcd (Not Scored)"

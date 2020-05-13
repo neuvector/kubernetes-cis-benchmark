@@ -291,3 +291,52 @@ else
   warn "$check_1_4_18"
   warn "     * File not found:$file"
 fi
+
+check_1_4_19="1.1.19  - Ensure that the Kubernetes PKI directory and file ownership is set to root:root"
+file="/etc/kubernetes/pki/"
+files=$(find $file)
+pass=true
+for f in ${files}; do
+  if [ "$(stat -c %u%g $f)" != 00 ]; then
+    pass=false;
+    break;
+  fi
+done
+
+if [ "$pass" = "true" ]; then
+  pass "$check_1_4_19"
+else
+  warn "$check_1_4_19"
+fi
+
+check_1_4_20="1.4.20  - Ensure that the Kubernetes PKI certificate file permissions are set to 644 or more restrictive"
+files=$(find $file -name "*.crt")
+pass=true
+for f in ${files}; do
+  if ! [ "$(stat -c %a $f)" -eq 644 -o "$(stat -c %a $f)" -eq 600 -o "$(stat -c %a $f)" -eq 400 ]; then
+    pass=false;
+    break;
+  fi
+done
+
+if [ "$pass" = "true" ]; then
+  pass "$check_1_4_20"
+else
+  warn "$check_1_4_20"
+fi
+
+check_1_4_21="1.4.21  - Ensure that the Kubernetes PKI key file permissions are set to 600"
+files=$(find $file -name "*.key")
+pass=true
+for f in ${files}; do
+  if ! [ "$(stat -c %a $f)" -eq 600 ]; then
+    pass=false;
+    break;
+  fi
+done
+
+if [ "$pass" = "true" ]; then
+  pass "$check_1_4_21"
+else
+  warn "$check_1_4_21"
+fi

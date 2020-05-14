@@ -89,7 +89,7 @@ else
     pass "$check_1_1_10"
 fi
 
-check_1_1_11="1.1.11  - Ensure that the admission control plugin AlwaysPullImages is set"
+check_1_1_11="1.1.11  - Ensure that the admission control plugin AlwaysPullImages is set (Scored)"
 if get_argument_value "$CIS_APISERVER_CMD" '--enable-admission-plugins'| grep 'AlwaysPullImages' >/dev/null 2>&1; then
     pass "$check_1_1_11"
 else

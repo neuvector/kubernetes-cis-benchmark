@@ -8,7 +8,6 @@ if check_argument "$CIS_MANAGER_CMD" '--terminated-pod-gc-threshold' >/dev/null 
     pass "$check_1_3_1"
     pass "       * terminated-pod-gc-threshold: $threshold"
 else
-    echo "done"
     warn "$check_1_3_1"
 fi
 

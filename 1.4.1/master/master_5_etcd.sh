@@ -23,7 +23,7 @@ else
 fi
 
 check_1_5_3="1.5.3  - Ensure that the --auto-tls argument is not set to true (Scored)"
-if check_argument "$CIS_ETCD_CMD" '--auto-tls=tru' >/dev/null 2>&1; then
+if check_argument "$CIS_ETCD_CMD" '--auto-tls=true' >/dev/null 2>&1; then
     warn "$check_1_5_3"
 else
     pass "$check_1_5_3"
@@ -58,7 +58,7 @@ else
     pass "$check_1_5_6"
 fi
 
-check_1_5_7="1.5.7  - Ensure that a unique Certificate Authority is used for etcd"
+check_1_5_7="1.5.7  - Ensure that a unique Certificate Authority is used for etcd (Not Scored)"
 if check_argument "$CIS_ETCD_CMD" '--trusted-ca-file' >/dev/null 2>&1; then
     if check_argument "$CIS_APISERVER_CMD" '--client-ca-file' >/dev/null 2>&1; then
         tfile=$(get_argument_value "$CIS_ETCD_CMD" '--trusted-ca-file')

@@ -3,7 +3,7 @@ info "1.6 - General Security Primitives"
 # Make the loop separator be a new-line in POSIX compliant fashion
 set -f; IFS=$'
 '
-check_1_6_1="1.6.1  - Place compensating controls in the form of PSP and RBAC for privileged containers usage"
+check_1_6_1="1.6.1  - Place compensating controls in the form of PSP and RBAC for privileged containers usage (Not Scored)"
 info "$check_1_6_1"
 
 check_1_6_2="1.6.2  - Ensure that the cluster-admin role is only used where required(Not Scored)"

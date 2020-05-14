@@ -634,12 +634,12 @@ if check_argument "$CIS_APISERVER_CMD" '--tls-cipher-suites' >/dev/null 2>&1; th
     ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|awk '{print $1}')
     found=$(echo $ciphers| sed -rn '/(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384|TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)/p')
     if [ ! -z "$found" ]; then
-      pass "$check_1_1_35"
+      pass "$check_1_2_35"
     else
-      warn "$check_1_1_35"
+      warn "$check_1_2_35"
     fi
 else
-    warn "$check_1_1_35"
+    warn "$check_1_2_35"
 fi
 
 info "1.3 - Controller Manager"

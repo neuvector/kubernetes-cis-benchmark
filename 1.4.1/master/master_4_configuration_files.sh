@@ -1,6 +1,6 @@
 info "1.4 - Configuration Files"
 
-check_1_4_1="1.4.1  - Ensure that the API server pod specification file permissions are set to 644 or more restrictive"
+check_1_4_1="1.4.1  - Ensure that the API server pod specification file permissions are set to 644 or more restrictive (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
     file="/etc/kubernetes/manifests/kube-apiserver.json"
 elif [ -f "/etc/kubernetes/manifests/kube-apiserver.manifest" ]; then
@@ -21,7 +21,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_2="1.4.2  - Ensure that the API server pod specification file ownership is set to root:root"
+check_1_4_2="1.4.2  - Ensure that the API server pod specification file ownership is set to root:root (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-apiserver.json" ]; then
     file="/etc/kubernetes/manifests/kube-apiserver.json"
 elif [ -f "/etc/kubernetes/manifests/kube-apiserver.manifest" ]; then
@@ -41,7 +41,7 @@ else
   info "$check_1_4_2"
 fi
 
-check_1_4_3="1.4.3  - Ensure that the controller manager pod specification file permissions are set to 644 or more restrictive"
+check_1_4_3="1.4.3  - Ensure that the controller manager pod specification file permissions are set to 644 or more restrictive (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-controller-manager.json" ]; then
     file="/etc/kubernetes/manifests/kube-controller-manager.json"
 elif [ -f "/etc/kubernetes/manifests/kube-controller-manager.manifest" ]; then
@@ -62,7 +62,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_4="1.4.4  - Ensure that the controller manager pod specification file ownership is set to root:root"
+check_1_4_4="1.4.4  - Ensure that the controller manager pod specification file ownership is set to root:root (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-controller-manager.json" ]; then
     file="/etc/kubernetes/manifests/kube-controller-manager.json"
 elif [ -f "/etc/kubernetes/manifests/kube-controller-manager.manifest" ]; then
@@ -83,7 +83,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_5="1.4.5  - Ensure that the scheduler pod specification file permissions are set to 644 or more restrictive"
+check_1_4_5="1.4.5  - Ensure that the scheduler pod specification file permissions are set to 644 or more restrictive (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
     file="/etc/kubernetes/manifests/kube-scheduler.json"
 elif [ -f "/etc/kubernetes/manifests/kube-scheduler.manifest" ]; then
@@ -104,7 +104,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_6="1.4.6  - Ensure that the scheduler pod specification file ownership is set to root:root"
+check_1_4_6="1.4.6  - Ensure that the scheduler pod specification file ownership is set to root:root (Scored)"
 if [ -f "/etc/kubernetes/manifests/kube-scheduler.json" ]; then
     file="/etc/kubernetes/manifests/kube-scheduler.json"
 elif [ -f "/etc/kubernetes/manifests/kube-scheduler.manifest" ]; then
@@ -126,7 +126,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_7="1.4.7  - Ensure that the etcd pod specification file permissions are set to 644 or more restrictive"
+check_1_4_7="1.4.7  - Ensure that the etcd pod specification file permissions are set to 644 or more restrictive (Scored)"
 if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
     file="/etc/kubernetes/manifests/etcd.json"
 elif [ -f "/etc/kubernetes/manifests/etcd.manifest" ]; then
@@ -148,7 +148,7 @@ else
   info "     * File not found"
 fi
 
-check_1_4_8="1.4.8  - Ensure that the etcd pod specification file ownership is set to root:root"
+check_1_4_8="1.4.8  - Ensure that the etcd pod specification file ownership is set to root:root (Scored)"
 if [ -f "/etc/kubernetes/manifests/etcd.json" ]; then
     file="/etc/kubernetes/manifests/etcd.json"
 elif [ -f "/etc/kubernetes/manifests/etcd.manifest" ]; then
@@ -170,9 +170,13 @@ else
 fi
 
 #TODO
-check_1_4_9="1.4.9  - Ensure that the Container Network Interface file permissions are set to 644 or more restrictive"
-check_1_4_10="1.4.10  - Ensure that the Container Network Interface file ownership is set to root:root"
-check_1_4_11="1.4.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive"
+check_1_4_9="1.4.9  - Ensure that the Container Network Interface file permissions are set to 644 or more restrictive (Not Scored)"
+info "$check_1_4_9"
+
+check_1_4_10="1.4.10  - Ensure that the Container Network Interface file ownership is set to root:root (Not Scored)"
+info "$check_1_4_10"
+
+check_1_4_11="1.4.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive (Scored)"
 directory=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir')
 if [ -d "$directory" ]; then
   if [ "$(stat -c %a $directory)" -eq 700 ]; then
@@ -187,7 +191,7 @@ else
   warn "     * Directory not found:$directory"
 fi
 
-check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd"
+check_1_4_12="1.4.12  - Ensure that the etcd data directory ownership is set to etcd:etcd (Scored)"
 directory=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir')
 if [ -d "$directory" ]; then
   if [ "$(stat -c %U:%G $directory)" = "etcd:etcd" ]; then
@@ -202,7 +206,7 @@ else
   warn "     * Directory not found:$directory"
 fi
 
-check_1_4_13="1.4.13  - Ensure that the admin.conf file permissions are set to 644 or more restrictive"
+check_1_4_13="1.4.13  - Ensure that the admin.conf file permissions are set to 644 or more restrictive (Scored)"
 file="/etc/kubernetes/admin.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
@@ -217,7 +221,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_14="1.4.14  - Ensure that the admin.conf file ownership is set to root:root"
+check_1_4_14="1.4.14  - Ensure that the admin.conf file ownership is set to root:root (Scored)"
 file="/etc/kubernetes/admin.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
@@ -232,7 +236,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_15="1.4.15  - Ensure that the scheduler.conf file permissions are set to 644 or more restrictive"
+check_1_4_15="1.4.15  - Ensure that the scheduler.conf file permissions are set to 644 or more restrictive (Scored)"
 file="/etc/kubernetes/scheduler.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
@@ -247,7 +251,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_16="1.4.16  - Ensure that the scheduler.conf file ownership is set to root:root"
+check_1_4_16="1.4.16  - Ensure that the scheduler.conf file ownership is set to root:root (Scored)"
 file="/etc/kubernetes/scheduler.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
@@ -262,7 +266,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_17="1.4.17  - Ensure that the controller-manager.conf file permissions are set to 644 or more restrictive"
+check_1_4_17="1.4.17  - Ensure that the controller-manager.conf file permissions are set to 644 or more restrictive (Scored)"
 file="/etc/kubernetes/controller-manager.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %a $file)" -eq 644 -o "$(stat -c %a $file)" -eq 640 -o "$(stat -c %a $file)" -eq 600 ]; then
@@ -277,7 +281,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_18="1.4.18  - Ensure that the controller-manager.conf file ownership is set to root:root"
+check_1_4_18="1.4.18  - Ensure that the controller-manager.conf file ownership is set to root:root (Scored)"
 file="/etc/kubernetes/controller-manager.conf"
 if [ -f $file ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then
@@ -292,7 +296,7 @@ else
   warn "     * File not found:$file"
 fi
 
-check_1_4_19="1.1.19  - Ensure that the Kubernetes PKI directory and file ownership is set to root:root"
+check_1_4_19="1.4.19  - Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Scored)"
 file="/etc/kubernetes/pki/"
 files=$(find $file)
 pass=true
@@ -309,7 +313,7 @@ else
   warn "$check_1_4_19"
 fi
 
-check_1_4_20="1.4.20  - Ensure that the Kubernetes PKI certificate file permissions are set to 644 or more restrictive"
+check_1_4_20="1.4.20  - Ensure that the Kubernetes PKI certificate file permissions are set to 644 or more restrictive (Scored)"
 files=$(find $file -name "*.crt")
 pass=true
 for f in ${files}; do
@@ -325,7 +329,7 @@ else
   warn "$check_1_4_20"
 fi
 
-check_1_4_21="1.4.21  - Ensure that the Kubernetes PKI key file permissions are set to 600"
+check_1_4_21="1.4.21  - Ensure that the Kubernetes PKI key file permissions are set to 600 (Scored)"
 files=$(find $file -name "*.key")
 pass=true
 for f in ${files}; do

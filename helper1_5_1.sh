@@ -39,7 +39,7 @@ info () {
     fi
   fi
 
-  printf "%b\n" "${bldblu}[INFO]${txtrst}${s_txt}${level_txt} $1"
+  printf "%b\n" "${bldblu}[INFO]${txtrst}${level_txt}${s_txt} $1"
 }
 
 pass () {
@@ -61,7 +61,7 @@ pass () {
     fi
   fi
 
-  printf "%b\n" "${bldgrn}[PASS]${txtrst}${s_txt}${level_txt} $1"
+  printf "%b\n" "${bldgrn}[PASS]${txtrst}${level_txt}${s_txt} $1"
 
 }
 
@@ -83,7 +83,7 @@ warn () {
     fi
   fi
 
-  printf "%b\n" "${bldred}[WARN]${txtrst}${s_txt}${level_txt} $1"
+  printf "%b\n" "${bldred}[WARN]${txtrst}${level_txt}${s_txt} $1"
 
 }
 

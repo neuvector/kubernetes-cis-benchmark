@@ -179,7 +179,7 @@ fi
 
 check_4_2_12="4.2.12  - Ensure that the RotateKubeletServerCertificate argument is set to true (Scored)"
 file="/etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
-found=$(sed -rn '/--feature-gates=RotateKubeletServerCertificate=true/p' $file)
+found=$(sed -rn '/--feature-gates=RotateKubeletServerCertificate=true/p' $file 2>/dev/null)
 if [ -z "$found" ]; then
     warn "$check_4_2_12"
 else

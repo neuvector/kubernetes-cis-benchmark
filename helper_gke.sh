@@ -127,7 +127,7 @@ get_argument_value() {
         |
     grep "^${OPTION}" |
     sed \
-        -e "s/^${OPTION}=//g"
+        -e "s/^${OPTION}[= ]//g"
 }
 
 #check whether an argument exist in command line

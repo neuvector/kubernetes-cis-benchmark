@@ -11,7 +11,7 @@ usage () {
   usage: ./worker.sh [-b] VERSION
 
   -b           optional  Do not print colors
-  VERSION      required  CIS benchmark version, for example: "gke", "1.5.1", "1.4.1", "1.2.0", "1.0.0"
+  VERSION      required  CIS benchmark version, for example: "gke", "ocp4.3", "ocp4.5", "1.5.1", "1.4.1", "1.2.0", "1.0.0"
 EOF
 }
 
@@ -19,7 +19,7 @@ while [ "$#" -ge 0 ]
 do
   case $1 in
     -b) nocolor="nocolor"; shift;;
-    1.0.0|1.2.0|1.4.1|1.5.1|gke) ver=$1; break 2;;
+    1.0.0|1.2.0|1.4.1|1.5.1|gke|ocp4.3|ocp4.5) ver=$1; break 2;;
     *) usage; exit 1;;
   esac
 done
@@ -28,6 +28,9 @@ CIS_KUBELET_CMD=${CIS_KUBELET_CMD:-kubelet}
 CIS_PROXY_CMD=${CIS_PROXY_CMD:-kube-proxy}
 # Load dependencies
 case $ver in
+  ocp4.3|ocp4.5)
+    . ./helper_ocp.sh
+    ;;
   gke)
     . ./helper_gke.sh
     ;;

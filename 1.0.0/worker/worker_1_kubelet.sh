@@ -32,7 +32,7 @@ fi
 
 check_2_1_5="2.1.5  - Ensure that the --read-only-port argument is set to 0"
 if check_argument "$CIS_KUBELET_CMD" '--read-only-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | awk '{print $1}')
+    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | cut -d " " -f 1)
     if [ $port = "0" ]; then
         pass "$check_2_1_5"
     else
@@ -82,7 +82,7 @@ fi
 
 check_2_1_11="2.1.11  - Ensure that the --event-qps argument is set to 0"
 if check_argument "$CIS_KUBELET_CMD" '--event-qps' >/dev/null 2>&1; then
-    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | awk '{print $1}')
+    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | cut -d " " -f 1)
     if [ $event = "0" ]; then
         pass "$check_2_1_11"
     else
@@ -110,7 +110,7 @@ fi
 
 check_2_1_13="2.1.13  - Ensure that the --cadvisor-port argument is set to 0"
 if check_argument "$CIS_KUBELET_CMD" '--cadvisor-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_KUBELET_CMD" '--cadvisor-port' | awk '{print $1}')
+    port=$(get_argument_value "$CIS_KUBELET_CMD" '--cadvisor-port' | cut -d " " -f 1)
     if [ $port = "0" ]; then
         pass "$check_2_1_13"
     else

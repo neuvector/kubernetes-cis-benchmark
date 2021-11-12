@@ -25,7 +25,7 @@ fi
 
 check_2_1_4="2.1.4  - Ensure that the --read-only-port argument is set to 0 (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--read-only-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | awk '{print $1}')
+    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | cut -d " " -f 1)
     if [ $port = "0" ]; then
         pass "$check_2_1_4"
     else
@@ -68,7 +68,7 @@ fi
 
 check_2_1_9="2.1.9  - Ensure that the --event-qps argument is set to 0 (Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--event-qps' >/dev/null 2>&1; then
-    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | awk '{print $1}')
+    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | cut -d " " -f 1)
     if [ $event = "0" ]; then
         pass "$check_2_1_9"
     else
@@ -115,7 +115,7 @@ fi
 
 check_2_1_14="2.1.14  - Ensure that the Kubelet only makes use of Strong Cryptographic Ciphers (Not Scored)"
 if check_argument "$CIS_KUBELET_CMD" '--tls-cipher-suites' >/dev/null 2>&1; then
-    ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|awk '{print $1}')
+    ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|cut -d " " -f 1)
     found=$(echo $ciphers| sed -rn '/(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384|TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384|TLS_RSA_WITH_AES_256_GCM_SHA384|TLS_RSA_WITH_AES_128_GCM_SHA256)/p')
     if [ ! -z "$found" ]; then
       pass "$check_2_1_14"

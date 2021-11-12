@@ -32,7 +32,7 @@ info () {
 
   level_txt=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_txt="${bldgry}[Level 2]${txtrst}"
     else
@@ -54,7 +54,7 @@ pass () {
 
   level_txt=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_txt="${bldgry}[Level 2]${txtrst}"
     else
@@ -76,7 +76,7 @@ warn () {
 
   level_txt=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_txt="${bldgry}[Level 2]${txtrst}"
     else

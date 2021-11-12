@@ -59,7 +59,7 @@ fi
 check_2_2_5="2.2.5  - Ensure that the proxy kubeconfig file permissions are set to 644 or more restrictive (Scored)"
 file=""
 if check_argument "$CIS_PROXY_CMD" '--kubeconfig' >/dev/null 2>&1; then
-  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|awk '{print $1}')
+  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|cut -d " " -f 1)
 fi
 
 if [ -f "$file" ]; then
@@ -77,7 +77,7 @@ fi
 check_2_2_6="2.2.6  - Ensure that the proxy kubeconfig file ownership is set to root:root (Scored)"
 file=""
 if check_argument "$CIS_PROXY_CMD" '--kubeconfig' >/dev/null 2>&1; then
-  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|awk '{print $1}')
+  file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|cut -d " " -f 1)
 fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %u%g $file)" -eq 00 ]; then

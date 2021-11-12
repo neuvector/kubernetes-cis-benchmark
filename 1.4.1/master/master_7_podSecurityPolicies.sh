@@ -1,5 +1,5 @@
 check_1_7_1="1.7.1  - Do not admit privileged containers (Not Scored)"
-names=$(kubectl get psp 2>/dev/null | awk '{if(FNR>1) {print $1}}')
+names=$(kubectl get psp 2>/dev/null | sed 1,1d | cut -d " " -f 1)
 result=""
 for name in $names; do
   result=$(kubectl get psp $name -o=jsonpath='{.spec.privileged}'|grep true)

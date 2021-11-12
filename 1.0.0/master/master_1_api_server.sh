@@ -37,7 +37,7 @@ fi
 
 check_1_1_6="1.1.6  - Ensure that the --insecure-bind-address argument is not set"
 if check_argument "$CIS_APISERVER_CMD" '--insecure-bind-address' >/dev/null 2>&1; then
-    address=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-bind-address'|awk '{print $1}')
+    address=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-bind-address'|cut -d " " -f 1)
     if [ "$address" = "127.0.0.1" ]; then
         pass "$check_1_1_6"
         pass "       * insecure-bind-address: $address"
@@ -51,7 +51,7 @@ fi
 
 check_1_1_7="1.1.7  - Ensure that the --insecure-port argument is set to 0"
 if check_argument "$CIS_APISERVER_CMD" '--insecure-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-port'|awk '{print $1}')
+    port=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-port'|cut -d " " -f 1)
     if [ "$port" = "0" ]; then
         pass "$check_1_1_7"
     else
@@ -64,7 +64,7 @@ fi
 
 check_1_1_8="1.1.8  - Ensure that the --secure-port argument is not set to 0"
 if check_argument "$CIS_APISERVER_CMD" '--secure-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_APISERVER_CMD" '--secure-port'|awk '{print $1}')
+    port=$(get_argument_value "$CIS_APISERVER_CMD" '--secure-port'|cut -d " " -f 1)
     if [ "$port" = "0" ]; then
         warn "$check_1_1_8"
         warn "       * secure-port: $port"
@@ -133,7 +133,7 @@ fi
 
 check_1_1_17="1.1.17  - Ensure that the --audit-log-maxage argument is set to 30 or as appropriate"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxage' >/dev/null 2>&1; then
-    maxage=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxage'|awk '{print $1}')
+    maxage=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxage'|cut -d " " -f 1)
     if [ "$maxage" = "30" ]; then
         pass "$check_1_1_17"
         pass "        * audit-log-maxage: $maxage"
@@ -147,7 +147,7 @@ fi
 
 check_1_1_18="1.1.18  - Ensure that the --audit-log-maxbackup argument is set to 10 or as appropriate"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxbackup' >/dev/null 2>&1; then
-    maxbackup=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxbackup'|awk '{print $1}')
+    maxbackup=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxbackup'|cut -d " " -f 1)
     if [ "$maxbackup" = "10" ]; then
         pass "$check_1_1_18"
         pass "        * audit-log-maxbackup: $maxbackup"
@@ -161,7 +161,7 @@ fi
 
 check_1_1_19="1.1.19  - Ensure that the --audit-log-maxsize argument is set to 100 or as appropriate"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxsize' >/dev/null 2>&1; then
-    maxsize=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxsize'|awk '{print $1}')
+    maxsize=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxsize'|cut -d " " -f 1)
     if [ "$maxsize" = "100" ]; then
         pass "$check_1_1_19"
         pass "        * audit-log-maxsize: $maxsize"

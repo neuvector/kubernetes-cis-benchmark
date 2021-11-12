@@ -15,7 +15,7 @@ if [ -z "$1" ]; then
 	exit
 fi
 # Check for required program(s)
-req_progs='awk grep pgrep sed'
+req_progs='grep pgrep sed'
 for p in $req_progs; do
   command -v "$p" >/dev/null 2>&1 || { printf "%s command not found.\n" "$p"; exit 1; }
 done

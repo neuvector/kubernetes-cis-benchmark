@@ -30,7 +30,7 @@ fi
 
 check_3_1_5="3.1.5 	Ensure that the --insecure-port argument is set to 0"
 if check_argument 'federation-apiserver' '--insecure-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'federation-apiserver' '--insecure-port'|awk '{print $1}')
+	port=$(get_argument_value 'federation-apiserver' '--insecure-port'|cut -d " " -f 1)
 	if [ "$port" = "0" ]; then
   		pass "$check_3_1_5"
 	else 
@@ -43,7 +43,7 @@ fi
 
 check_3_1_6="3.1.6 	Ensure that the --secure-port argument is not set to 0"
 if check_argument 'federation-apiserver' '--secure-port' >/dev/null 2>&1; then
-	port=$(get_argument_value 'federation-apiserver' '--secure-port'|awk '{print $1}')
+	port=$(get_argument_value 'federation-apiserver' '--secure-port'|cut -d " " -f 1)
 	if [ "$port" = "0" ]; then
   		warn "$check_3_1_6"
        	warn "       * secure-port: $port"
@@ -86,7 +86,7 @@ fi
 
 check_3_1_11="3.1.11 	Ensure that the --audit-log-maxage argument is set to 30 or as appropriate"
 if check_argument 'federation-apiserver' '--audit-log-maxage' >/dev/null 2>&1; then
-	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxage'|awk '{print $1}')
+	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxage'|cut -d " " -f 1)
 	if [ "$v" = "30" ]; then
   		pass "$check_3_1_11"
        	pass "        * audit-log-maxage: $v"
@@ -100,7 +100,7 @@ fi
 
 check_3_1_12="3.1.12 	Ensure that the --audit-log-maxbackup argument is set to 10 or as appropriate"
 if check_argument 'federation-apiserver' '--audit-log-maxbackup' >/dev/null 2>&1; then
-	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxbackup' |awk '{print $1}')
+	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxbackup' |cut -d " " -f 1)
 	if [ "$v" = "10" ]; then
   		pass "$check_3_1_12"
        	pass "        * audit-log-maxbackup : $v"
@@ -114,7 +114,7 @@ fi
 
 check_3_1_13="3.1.13 	Ensure that the --audit-log-maxsize argument is set to 100 or as appropriate"
 if check_argument 'federation-apiserver' '--audit-log-maxsize' >/dev/null 2>&1; then
-	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxsize' |awk '{print $1}')
+	v=$(get_argument_value 'federation-apiserver' '--audit-log-maxsize' |cut -d " " -f 1)
 	if [ "$v" = "100" ]; then
   		pass "$check_3_1_13"
        	pass "        * audit-log-maxsize : $v"

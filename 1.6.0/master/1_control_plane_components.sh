@@ -147,7 +147,7 @@ info "$check_1_1_10
 check_1_1_11="1.1.11  - Ensure that the etcd data directory permissions are set to 700 or more restrictive (Automated)"
 file=""
 if check_argument "$CIS_ETCD_CMD" '--data-dir' >/dev/null 2>&1; then
-    file=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir'|awk '{print $1}')
+    file=$(get_argument_value "$CIS_ETCD_CMD" '--data-dir'|cut -d " " -f 1)
 fi
 if [ -f "$file" ]; then
   if [ "$(stat -c %a $file)" -eq 700 -o "$(stat -c %a $file)" -eq 600 -o "$(stat -c %a $file)" -eq 400 ]; then
@@ -443,7 +443,7 @@ fi
 
 check_1_2_19="1.2.19  - Ensure that the --insecure-port argument is set to 0 (Automated)"
 if check_argument "$CIS_APISERVER_CMD" '--insecure-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-port'|awk '{print $1}')
+    port=$(get_argument_value "$CIS_APISERVER_CMD" '--insecure-port'|cut -d " " -f 1)
     if [ "$port" = "0" ]; then
         pass "$check_1_2_19"
     else
@@ -456,7 +456,7 @@ fi
 
 check_1_2_20="1.2.20  - Ensure that the --secure-port argument is not set to 0 (Automated)"
 if check_argument "$CIS_APISERVER_CMD" '--secure-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_APISERVER_CMD" '--secure-port'|awk '{print $1}')
+    port=$(get_argument_value "$CIS_APISERVER_CMD" '--secure-port'|cut -d " " -f 1)
     if [ "$port" = "0" ]; then
         warn "$check_1_2_20"
         warn "       * secure-port: $port"
@@ -483,7 +483,7 @@ fi
 
 check_1_2_23="1.2.23  - Ensure that the --audit-log-maxage argument is set to 30 or as appropriate (Automated)"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxage' >/dev/null 2>&1; then
-    maxage=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxage'|awk '{print $1}')
+    maxage=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxage'|cut -d " " -f 1)
     if [ "$maxage" -ge "30" ]; then
         pass "$check_1_2_23"
         pass "        * audit-log-maxage: $maxage"
@@ -497,7 +497,7 @@ fi
 
 check_1_2_24="1.2.24  - Ensure that the --audit-log-maxbackup argument is set to 10 or as appropriate (Automated)"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxbackup' >/dev/null 2>&1; then
-    maxbackup=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxbackup'|awk '{print $1}')
+    maxbackup=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxbackup'|cut -d " " -f 1)
     if [ "$maxbackup" -ge "10" ]; then
         pass "$check_1_2_24"
         pass "        * audit-log-maxbackup: $maxbackup"
@@ -511,7 +511,7 @@ fi
 
 check_1_2_25="1.2.25  - Ensure that the --audit-log-maxsize argument is set to 100 or as appropriate (Automated)"
 if check_argument "$CIS_APISERVER_CMD" '--audit-log-maxsize' >/dev/null 2>&1; then
-    maxsize=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxsize'|awk '{print $1}')
+    maxsize=$(get_argument_value "$CIS_APISERVER_CMD" '--audit-log-maxsize'|cut -d " " -f 1)
     if [ "$maxsize" -ge "100" ]; then
         pass "$check_1_2_25"
         pass "        * audit-log-maxsize: $maxsize"
@@ -631,7 +631,7 @@ fi
 
 check_1_2_35="1.2.35  - Ensure that the API Server only makes use of Strong Cryptographic Ciphers (Manual)"
 if check_argument "$CIS_APISERVER_CMD" '--tls-cipher-suites' >/dev/null 2>&1; then
-    ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|awk '{print $1}')
+    ciphers=$(get_argument_value "$CIS_APISERVER_CMD" '--tls-cipher-suites'|cut -d " " -f 1)
     found=$(echo $ciphers| sed -rn '/(TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256|TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384|TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305|TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)/p')
     if [ ! -z "$found" ]; then
       pass "$check_1_2_35"

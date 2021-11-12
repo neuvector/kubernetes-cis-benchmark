@@ -34,7 +34,7 @@ info () {
   level_info=""
   scoring_info=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_info="${bldgry}[Level 2]${txtrst}"
     else
@@ -62,7 +62,7 @@ pass () {
   level_info=""
   scoring_info=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_info="${bldgry}[Level 2]${txtrst}"
     else
@@ -90,7 +90,7 @@ warn () {
   level_info=""
   scoring_info=""
   if [ ${#s_txt} -ne 0 ]; then
-    idx=$(echo "$1" | awk '{print $1}')
+    idx=$(echo "$1" | cut -d " " -f 1)
     if echo "$level2" | grep -q "\<${idx}\>"; then
       level_info="${bldgry}[Level 2]${txtrst}"
     else

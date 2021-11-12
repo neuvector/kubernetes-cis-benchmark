@@ -29,7 +29,7 @@ fi
 check_4_1_3="4.1.3  - Ensure that the proxy kubeconfig file permissions are set to 644 or more restrictive (Manual)"
 file=""
 if check_argument "$CIS_PROXY_CMD" '--kubeconfig' >/dev/null 2>&1; then
-    file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|awk '{print $1}')
+    file=$(get_argument_value "$CIS_PROXY_CMD" '--kubeconfig'|cut -d " " -f 1)
 fi
 
 if [ -f "$file" ]; then
@@ -177,7 +177,7 @@ fi
 
 check_4_2_4="4.2.4  - Ensure that the --read-only-port argument is set to 0 (Manual)"
 if check_argument "$CIS_KUBELET_CMD" '--read-only-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | awk '{print $1}')
+    port=$(get_argument_value "$CIS_KUBELET_CMD" '--read-only-port' | cut -d " " -f 1)
     if [ $port = "0" ]; then
         pass "$check_4_2_4"
     else
@@ -242,7 +242,7 @@ fi
 
 check_4_2_11="4.2.11  - Ensure that the --rotate-certificates argument is not set to false (Manual)"
 if check_argument "$CIS_KUBELET_CMD" '--event-qps' >/dev/null 2>&1; then
-    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | awk '{print $1}')
+    event=$(get_argument_value "$CIS_KUBELET_CMD" '--event-qps' | cut -d " " -f 1)
     if [ $event = "0" ]; then
         pass "$check_4_2_11"
     else
@@ -264,7 +264,7 @@ fi
 
 check_4_2_13="4.2.13  - Ensure that the Kubelet only makes use of Strong Cryptographic Ciphers (Manual)"
 if check_argument "$CIS_KUBELET_CMD" '--cadvisor-port' >/dev/null 2>&1; then
-    port=$(get_argument_value "$CIS_KUBELET_CMD" '--cadvisor-port' | awk '{print $1}')
+    port=$(get_argument_value "$CIS_KUBELET_CMD" '--cadvisor-port' | cut -d " " -f 1)
     if [ $port = "0" ]; then
         pass "$check_4_2_13"
     else

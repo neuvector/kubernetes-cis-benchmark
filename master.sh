@@ -11,7 +11,7 @@ usage () {
   usage: ./master.sh [-b] VERSION
 
   -b           optional  Do not print colors
-  VERSION      required  CIS benchmark version, for example: "gke", "1.6.0", "1.5.1", "1.4.1", "1.2.0", "1.0.0"
+  VERSION      required  CIS benchmark version, for example: "gke", "1.6.0-refactor", "1.6.0", "1.5.1", "1.4.1", "1.2.0", "1.0.0"
 EOF
 }
 
@@ -19,7 +19,7 @@ while [ "$#" -ge 0 ]
 do
   case $1 in
     -b) nocolor="nocolor"; shift;;
-    1.0.0|1.2.0|1.4.1|1.5.1|1.6.0|gke) ver=$1; break 2;;
+    1.0.0|1.2.0|1.4.1|1.5.1|1.6.0|1.6.0-refactor|gke) ver=$1; break 2;;
     *) usage; exit 1;;
   esac
 done
@@ -30,11 +30,16 @@ CIS_SCHEDULER_CMD=${CIS_SCHEDULER_CMD:-kube-scheduler}
 CIS_ETCD_CMD=${CIS_ETCD_CMD:-etcd}
 CIS_PROXY_CMD=${CIS_PROXY_CMD:-kube-proxy}
 
+. ./helper_common.sh
+
 case $ver in
   gke)
     . ./helper_gke.sh
     ;;
   1.6.0)
+    . ./helper1_6_0.sh
+    ;;
+  1.6.0-refactor)
     . ./helper1_6_0.sh
     ;;
   1.5.1)
